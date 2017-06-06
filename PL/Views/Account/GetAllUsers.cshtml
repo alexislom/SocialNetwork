@@ -1,0 +1,54 @@
+﻿@model PL.Models.User.UsersEditModel
+@using (Html.BeginForm("Register", "Account", FormMethod.Get))
+{   <div class="row">
+
+        <div class="col-xs-12">
+            <h2>Manage users</h2>
+            <button type="submit" class="btn bg-warning user_edit_buttons">Create user</button>
+        </div>
+    </div>
+    <hr />
+}
+@if (Model.Users.Count() == 0)
+{
+    <b>Social Network "InTouch" is dead... There are nobody except you</b>
+}
+else
+{
+    foreach (var item in Model.Users)
+    {
+        using (Html.BeginForm("ChangeRole", "Account"))
+        {
+            <div class="row">
+                <div class="col-xs-6">
+                    @Html.ActionLink(item.UserName, "ShowUser", "Profile", new { id = item.Id })
+                </div>
+                <div class="col-xs-6">
+                    @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector" })
+                    @Html.Hidden("value", Model.NewRole, new { @class = "role_value", @value = "ActiveUser" })
+                    @Html.Hidden("id", item.Id, new { @class = "id" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button type="submit" class="btn btn-success btn-block">Save</button>
+                </div>
+                <div class="col-xs-6">
+                    <button type="button" value="@item.Id" class="btn btn-block btn-danger button_delete">Delete</button>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+}
+<script>
+    $(document).ready(function(){  $(".user_role_selector").change(function () {
+        var selectedRole = $(this).val();
+        var next = $(this).next(".role_value").val(selectedRole);
+    });
+
+        $(".button_delete").click(function () {
+            location.href = "/Account/DeleteUser/" + $(this).val();
+        })
+    })
+</script>

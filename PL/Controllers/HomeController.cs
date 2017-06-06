@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace PL.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
@@ -16,24 +17,20 @@ namespace PL.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
-            _userService.GetAll();
-            return View();
-        }
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+                if (User.IsInRole("BannedUser"))
+                {
+                    return View("Error");
+                }
+                return RedirectToAction("Index", "Profile");
+            }
+            return RedirectToAction("Login", "Account");
         }
     }
 }

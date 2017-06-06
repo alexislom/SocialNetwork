@@ -1,0 +1,36 @@
+﻿
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar_collapse_1">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        @Html.ActionLink("LOM", "Index", "Profile", null, htmlAttributes: new { @class = "navbar-brand" })
+    </div>
+    <div class="collapse navbar-collapse" id="navbar_collapse_1">
+        <ul class="nav navbar-nav navbar-right text-center">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    @Ajax.ActionLinkWithGlyphicon("fa fa-search", "Search", "Search", "Profile", new AjaxOptions
+                   {
+                       UpdateTargetId = "main_container",
+                       InsertionMode = InsertionMode.Replace,
+                       LoadingElementId = "loading",
+                       AllowCache = false,
+                       OnBegin = "hideContent",
+                       OnComplete = "unhideContent"
+                   })
+                </li>
+            }
+            <li>
+                @Html.Partial("_LoginMenu")
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+

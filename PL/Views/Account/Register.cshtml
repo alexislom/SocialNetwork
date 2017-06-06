@@ -1,41 +1,54 @@
-﻿@model PL.Models.RegisterViewModel
+﻿@model PL.Models.User.RegisterViewModel
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Register";
 }
-
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new Dictionary<string, object> { { "data-toggle", "validator" }, { "class", "col-md-8 col-sm-pull-2 col-md-offset-3" } }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+    @Html.ValidationSummary()
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <h3>Registration</h3>
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter login" })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter first name" })
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter last name" })
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Gender)
+        <div>
+            @Html.RadioButtonFor(m => m.Gender, "true", new { id = "male_true" })
+            @Html.Label("male_true", "Male")
+            @Html.RadioButtonFor(m => m.Gender, "false", new { id = "male_false" })
+            @Html.Label("male_false", "Female")
+            @Html.ValidationMessageFor(m => m.Gender)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserEmail)
+        @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control", @placeholder = "Enter Email" })
+        @Html.ValidationMessageFor(m => m.UserEmail)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserPassword)
+        @Html.TextBoxFor(m => m.UserPassword, new { @class = "form-control", @placeholder = "Enter password", @type = "password" })
+        @Html.ValidationMessageFor(m => m.UserPassword)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PasswordConfirm)
+        @Html.TextBoxFor(m => m.PasswordConfirm, new { @class = "form-control", @placeholder = "Confirm password", @type = "password" })
+        @Html.ValidationMessageFor(m => m.PasswordConfirm)
+    </div>
+    <button type="submit" class="btn btn-success btn-lg btn-block">Sign Up</button>
 }

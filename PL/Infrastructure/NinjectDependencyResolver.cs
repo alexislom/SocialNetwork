@@ -18,11 +18,6 @@ namespace PL.Infrastructure
             kernel.ConfigurateResolverWeb();
         }
 
-        //public NinjectDependencyResolver()
-        //{
-        //    _kernel = new StandardKernel(new ResolverModule());
-        //}
-
         public object GetService(Type serviceType)
         {
             return kernel.TryGet(serviceType);

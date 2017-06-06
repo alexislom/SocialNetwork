@@ -1,6 +1,7 @@
 ﻿using BLL.Interface.Interfaces;
 using BLL.Services;
 using DAL;
+using DAL.Interface.Interfaces;
 using DAL.Interfaces.Interfaces;
 using DAL.Repositories;
 using Ninject;
@@ -43,20 +44,20 @@ namespace DependencyResolver
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IUserRepository>().To<UserRepository>();
 
-            //kernel.Bind<IRoleService>().To<RoleService>();
-            //kernel.Bind<IRoleRepository>().To<RoleRepository>();
+            kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<IRoleRepository>().To<RoleRepository>();
 
-            //kernel.Bind<IProfileService>().To<ProfileService>();
-            //kernel.Bind<IProfileRepository>().To<ProfileRepository>();
+            kernel.Bind<IUserProfileService>().To<UserProfileService>();
+            kernel.Bind<IUserProfileRepository>().To<UserProfileRepository>();
 
-            //kernel.Bind<IFriendshipService>().To<FriendshipService>();
-            //kernel.Bind<IFriendshipRepository>().To<FriendshipRepository>();
+            kernel.Bind<IFriendRequestService>().To<FriendRequestService>();
+            kernel.Bind<IFriendRequestRepository>().To<FriendRequestRepository>();
 
-            //kernel.Bind<IMessageService>().To<MessageService>();
-            //kernel.Bind<IMessageRepository>().To<MessageRepository>();
+            kernel.Bind<IMessageService>().To<MessageService>();
+            kernel.Bind<IMessageRepository>().To<MessageRepository>();
 
-            //kernel.Bind<IPhotoService>().To<PhotoService>();
-            //kernel.Bind<IPhotoRepository>().To<PhotoRepository>();
+            kernel.Bind<IPhotoService>().To<PhotoService>();
+            kernel.Bind<IPhotoRepository>().To<PhotoRepository>();
 
         }
     }

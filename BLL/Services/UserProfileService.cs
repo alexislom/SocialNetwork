@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class ProfileService : IUserProfileService
+    public class UserProfileService : IUserProfileService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IUserProfileRepository profileRepository;
 
-        public ProfileService(IUnitOfWork unitOfWork, IUserProfileRepository profileRepository)
+        public UserProfileService(IUnitOfWork unitOfWork, IUserProfileRepository profileRepository)
         {
             this.unitOfWork = unitOfWork;
             this.profileRepository = profileRepository;

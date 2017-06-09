@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BLL.Interface.Entities;
+﻿using BLL.Interface.Entities;
 using BLL.Interface.Interfaces;
 using DAL.Interface;
 using DAL.Interfaces.DTO;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Mappers;
 
 namespace BLL.Services
 {
@@ -29,51 +29,32 @@ namespace BLL.Services
             if (message == null)
                 return null;
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalMessage, BllMessage>());
-            var bllMessage = Mapper.Map<BllMessage>(message);
-            return bllMessage;
-            //return message.ToBllMessage();
+            return message.ToBllMessage();
         }
 
         public IEnumerable<BllMessage> GetAll()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DalMessage, BllMessage>());
-            return messageRepository.GetAll().Select(m => Mapper.Map<BllMessage>(m));
-            //return messageRepository.GetAll().Select(m => m.ToBllMessage());
+            return messageRepository.GetAll().Select(m => m.ToBllMessage());
         }
         public IEnumerable<BllMessage> GetMessages(int UserFrom, int UserTo)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DalMessage, BllMessage>());
-            return messageRepository.GetMessages(UserFrom, UserTo).Select(m => Mapper.Map<BllMessage>(m));
-            //return messageRepository.GetMessages(UserFrom, UserTo).Select(m => m.ToBllMessage());
+            return messageRepository.GetMessages(UserFrom, UserTo).Select(m => m.ToBllMessage());
         }
         public void Create(BllMessage item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllMessage,DalMessage>());
-            var dalMessage = Mapper.Map<DalMessage>(item);
-
-            messageRepository.Create(dalMessage);
-            //messageRepository.Create(item.ToDalMessage());
+            messageRepository.Create(item.ToDalMessage());
             unitOfWork.Commit();
         }
 
         public void Delete(BllMessage item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllMessage, DalMessage>());
-            var dalMessage = Mapper.Map<DalMessage>(item);
-
-            messageRepository.Delete(dalMessage);
-            //messageRepository.Delete(item.ToDalMessage());
+            messageRepository.Delete(item.ToDalMessage());
             unitOfWork.Commit();
         }
 
         public void Update(BllMessage item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllMessage, DalMessage>());
-            var dalMessage = Mapper.Map<DalMessage>(item);
-
-            messageRepository.Update(dalMessage);
-            //messageRepository.Update(item.ToDalMessage());
+            messageRepository.Update(item.ToDalMessage());
             unitOfWork.Commit();
         }
 
@@ -88,9 +69,7 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalMessage), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalMessage, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalMessage,BllMessage>());
-            return messageRepository.GetAllByPredicate(exp).Select(user => Mapper.Map<BllMessage>(user)).ToList();
-            //return messageRepository.GetAllByPredicate(exp).Select(user => user.ToBllMessage()).ToList();
+            return messageRepository.GetAllByPredicate(exp).Select(user => user.ToBllMessage()).ToList();
         }
 
 

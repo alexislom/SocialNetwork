@@ -9,8 +9,6 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/unobtrusive-ajax")
-    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/customJS.js")
 
 </head>
@@ -29,6 +27,8 @@
             @Html.Partial("_LeftMenu")
         </div>
     </div>
+    @Scripts.Render("~/bundles/unobtrusive-ajax")
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 </body>
 </html>

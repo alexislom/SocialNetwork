@@ -67,6 +67,9 @@
     <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.10\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -209,18 +212,25 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ConversationHub.cs" />
     <Compile Include="Infrastructure\AjaxHelperExtention.cs" />
+    <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Mappers\ProfileMapper.cs" />
     <Compile Include="Infrastructure\Mappers\RoleMapper.cs" />
     <Compile Include="Infrastructure\Mappers\UserMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\Profile\DialogProfile.cs" />
+    <Compile Include="Models\Profile\FullProfileViewModel.cs" />
+    <Compile Include="Models\Profile\ProfileEditModel.cs" />
     <Compile Include="Models\Profile\ProfileViewModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\User\LogViewModel.cs" />
     <Compile Include="Models\User\RegisterViewModel.cs" />
     <Compile Include="Models\User\UsersEditModel.cs" />
@@ -294,8 +304,14 @@
     <Content Include="Views\Shared\_MessageFilterProfilesViewList.cshtml" />
     <Content Include="Views\Shared\_LoginMenu.cshtml" />
     <Content Include="Views\Account\GetAllUsers.cshtml" />
+    <Content Include="Views\Shared\BannedUserPage.cshtml" />
+    <Content Include="Views\Shared\_ProfilesViewList.cshtml" />
+    <Content Include="Views\Shared\_Profile.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Profile\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

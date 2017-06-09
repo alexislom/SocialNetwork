@@ -14,9 +14,9 @@ namespace ORM.ConfigurationEntities
         {
             HasKey(p => p.Id);
 
-            HasMany(p => p.Friends)
-                .WithRequired(r => r.User)
-                .HasForeignKey(k => k.UserId);
+            //HasMany(p => p.Friends)
+            //    .WithRequired(r => r.User)
+            //    .HasForeignKey(k => k.UserId);
 
             //HasMany(p => p.Messages)
             //    .WithRequired(r => r.FromUser)
@@ -26,8 +26,8 @@ namespace ORM.ConfigurationEntities
                 .IsRequired()
                 .HasMaxLength(30);
 
-            Property(p => p.CreationDate)
-                .IsRequired();
+            //Property(p => p.CreationDate)
+            //    .IsRequired();
 
             Property(p => p.Email)
                 .IsRequired()

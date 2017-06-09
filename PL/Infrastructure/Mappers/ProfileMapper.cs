@@ -35,44 +35,44 @@ namespace PL.Infrastructure.Mappers
             };
         }
 
-        //public static DialogProfile ToDialogProfile(this BllProfile profile)
-        //{
-        //    return new DialogProfile()
-        //    {
-        //        Id = profile.Id,
-        //        FirstName = profile.FirstName,
-        //        LastName = profile.LastName
-        //    };
-        //}
-        //public static FullProfileViewModel ToFullMvcProfile(this BllProfile profile)
-        //{
-        //    return new FullProfileViewModel()
-        //    {
-        //        BirthDate = profile.BirthDate,
-        //        Id = profile.Id,
-        //        FirstName = profile.FirstName,
-        //        LastName = profile.LastName,
-        //        UserName = profile.UserName,
-        //        PhotoId = profile.PhotoId,
-        //        City = profile.City,
-        //        Gender = profile.Gender,
-        //        ContactPhone = profile.ContactPhone,
-        //        AboutMe = profile.AboutMe
-        //    };
-        //}
+        public static DialogProfile ToDialogProfile(this BllUserProfile profile)
+        {
+            return new DialogProfile()
+            {
+                Id = profile.Id,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName
+            };
+        }
+        public static FullProfileViewModel ToFullMvcProfile(this BllUserProfile profile)
+        {
+            return new FullProfileViewModel()
+            {
+                DateOfBirth = profile.DateOfBirth,
+                Id = profile.Id,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                NickName = profile.NickName,
+                PhotoId = profile.PhotoId,
+                City = profile.City,
+                Gender = profile.Gender,
+                MobilePhoneNumber = profile.MobilePhoneNumber,
+                Status = profile.Status
+            };
+        }
 
-        //public static BllProfile ToUpdatingBllProfile(this ProfileEditModel model)
-        //{
-        //    return new BllProfile()
-        //    {
-        //        Id = model.Id,
-        //        FirstName = model.FirstName,
-        //        LastName = model.LastName,
-        //        BirthDate = model.BirthDate,
-        //        AboutMe = model.AboutMe,
-        //        City = model.City,
-        //        ContactPhone = model.ContactPhone
-        //    };
-        //}
+        public static BllUserProfile ToUpdatingBllProfile(this ProfileEditModel model)
+        {
+            return new BllUserProfile()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Status = model.Status,
+                City = model.City,
+                MobilePhoneNumber = model.MobilePhoneNumber
+            };
+        }
     }
 }

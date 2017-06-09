@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BLL.Interface.Entities;
+﻿using BLL.Interface.Entities;
 using BLL.Interface.Interfaces;
 using DAL.Interface;
 using DAL.Interfaces.DTO;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Mappers;
 
 namespace BLL.Services
 {
@@ -25,27 +25,19 @@ namespace BLL.Services
         }
         public void Create(BllFriendRequest item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllFriendRequest, DalFriendRequest>());
-            var dalFriendRequest = Mapper.Map<DalFriendRequest>(item);
-            //friendRequestRepository.Create(item.ToDalFriendship());
-            friendRequestRepository.Create(dalFriendRequest);
+            friendRequestRepository.Create(item.ToDalFriendRequest());
             unitOfWork.Commit();
         }
 
         public void Delete(BllFriendRequest item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllFriendRequest, DalFriendRequest>());
-            var dalFriendRequest = Mapper.Map<DalFriendRequest>(item);
-            //friendshipRepository.Delete(item.ToDalFriendship());
-            friendRequestRepository.Delete(dalFriendRequest);
+            friendRequestRepository.Delete(item.ToDalFriendRequest());
             unitOfWork.Commit();
         }
 
         public IEnumerable<BllFriendRequest> GetAll()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DalFriendRequest,BllFriendRequest>());
-            return friendRequestRepository.GetAll().Select(f => Mapper.Map<BllFriendRequest>(f));
-            //return friendRequestRepository.GetAll().Select(f => f.ToBllFriendship());
+            return friendRequestRepository.GetAll().Select(f => f.ToBllFriendRequest());
         }
 
         public IEnumerable<BllFriendRequest> GetAllByPredicate(Expression<Func<BllFriendRequest, bool>> predicates)
@@ -54,9 +46,7 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalFriendRequest), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalFriendRequest, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalFriendRequest, BllFriendRequest>());
-            return friendRequestRepository.GetAllByPredicate(exp).Select(f => Mapper.Map<BllFriendRequest>(f)).ToList();
-            //return friendRequestRepository.GetAllByPredicate(exp).Select(f => f.ToBllFriendship()).ToList();
+            return friendRequestRepository.GetAllByPredicate(exp).Select(f => f.ToBllFriendRequest()).ToList();
         }
 
         public BllFriendRequest GetById(int id)
@@ -65,10 +55,7 @@ namespace BLL.Services
             if (friendRequest == null)
                 return null;
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalFriendRequest,BllFriendRequest>());
-            var bllFriendRequest = Mapper.Map<BllFriendRequest>(friendRequest);
-            return bllFriendRequest;
-            //return friendRequest.ToBllFriendship();
+            return friendRequest.ToBllFriendRequest();
         }
 
         public BllFriendRequest GetOneByPredicate(Expression<Func<BllFriendRequest, bool>> predicates)
@@ -78,11 +65,7 @@ namespace BLL.Services
 
         public void Update(BllFriendRequest item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllFriendRequest, DalFriendRequest>());
-            var dalFriendRequest = Mapper.Map<DalFriendRequest>(item);
-
-            friendRequestRepository.Update(dalFriendRequest);
-            //friendRequestRepository.Update(item.ToDalFriendship());
+            friendRequestRepository.Update(item.ToDalFriendRequest());
             unitOfWork.Commit();
         }
 

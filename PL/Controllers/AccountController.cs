@@ -83,6 +83,12 @@ namespace PL.Controllers
                 return View(viewModel);
             }
 
+            if (viewModel.Captcha != (string)Session["code"])
+            {
+                ModelState.AddModelError("Captcha", "Incorrect input.");
+                return View(viewModel);
+            }
+
             if (ModelState.IsValid)
             {
                 MembershipRegistration(viewModel);

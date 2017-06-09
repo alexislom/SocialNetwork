@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<PL.Models.Profile.ProfileViewModel>
-
 <div class="row">
     <h2>@ViewBag.Title</h2>
     <hr />
@@ -12,15 +11,15 @@
 {
     <div class="row text-center">
         <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
-            <a href="@Url.Action("ShowUser", "Profile", new  { id = profile.Id})">
+            <a href="@Url.Action("ShowUser", "Profile",new  { id = profile.Id})">
                 <img src="@Url.Action("GetImage", "Profile", new {Id = profile.PhotoId})" class="img-circle img-responsive" />
             </a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-5">
-            <a href="@Url.Action("ShowUser", "Profile", new  { id = profile.Id})"><h4>@profile.FirstName @profile.LastName</h4></a>
+            <a href="@Url.Action("ShowUser", "Profile",new  { id = profile.Id})"><h4>@profile.FirstName @profile.LastName</h4></a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-5">
-            <a href="@Url.Action("GetUserMessages", "Message", new {id = profile.Id})"><h4>Manage messages</h4></a>
+            <a href="@Url.Action("GetMessages", "Message", new {id = profile.Id})"><h4>Message</h4></a>
         </div>
     </div>
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BLL.Interface.Entities;
+﻿using BLL.Interface.Entities;
 using BLL.Interface.Interfaces;
 using DAL.Interface;
 using DAL.Interfaces.DTO;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Mappers;
 
 namespace BLL.Services
 {
@@ -25,27 +25,19 @@ namespace BLL.Services
         }
         public void Create(BllUserProfile item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllUserProfile, DalUserProfile>());
-            var dalUserProfile = Mapper.Map<DalUserProfile>(item);
-            profileRepository.Create(dalUserProfile);
-            //profileRepository.Create(item.ToDalProfile());
+            profileRepository.Create(item.ToDalUserProfile());
             unitOfWork.Commit();
         }
 
         public void Delete(BllUserProfile item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllUserProfile, DalUserProfile>());
-            var dalUserProfile = Mapper.Map<DalUserProfile>(item);
-            profileRepository.Delete(dalUserProfile);
-            //profileRepository.Delete(item.ToDalProfile());
+            profileRepository.Delete(item.ToDalUserProfile());
             unitOfWork.Commit();
         }
 
         public IEnumerable<BllUserProfile> GetAll()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<DalUserProfile,BllUserProfile>());
-            return profileRepository.GetAll().Select(p => Mapper.Map<BllUserProfile>(p));
-            //return profileRepository.GetAll().Select(p => p.ToBllProfile());
+            return profileRepository.GetAll().Select(p => p.ToBllUserProfile());
         }
 
         public IEnumerable<BllUserProfile> GetAllByPredicate(Expression<Func<BllUserProfile, bool>> predicates)
@@ -54,9 +46,7 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalUserProfile), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalUserProfile, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalUserProfile, BllUserProfile>());
-            return profileRepository.GetAllByPredicate(exp).Select(p => Mapper.Map<BllUserProfile>(p)).ToList();
-            //return profileRepository.GetAllByPredicate(exp).Select(p => p.ToBllProfile()).ToList();
+            return profileRepository.GetAllByPredicate(exp).Select(p => p.ToBllUserProfile()).ToList();
         }
 
         public BllUserProfile GetById(int id)
@@ -65,9 +55,7 @@ namespace BLL.Services
             if (profile == null)
                 return null;
 
-            Mapper.Initialize(cfg => cfg.CreateMap<DalUserProfile, BllUserProfile>());
-            return Mapper.Map<BllUserProfile>(profile);
-            //return profile.ToBllProfile();
+            return profile.ToBllUserProfile();
         }
 
         public BllUserProfile GetOneByPredicate(Expression<Func<BllUserProfile, bool>> predicates)
@@ -77,11 +65,7 @@ namespace BLL.Services
 
         public void Update(BllUserProfile item)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<BllUserProfile,DalUserProfile>());
-            var bllUserProfile =  Mapper.Map<DalUserProfile>(item);
-
-            profileRepository.Update(bllUserProfile);
-            //profileRepository.Update(item.ToDalProfile());
+            profileRepository.Update(item.ToDalUserProfile());
             unitOfWork.Commit();
         }
 

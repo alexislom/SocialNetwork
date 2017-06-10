@@ -130,7 +130,7 @@ textarea {
 }
 .text-left li a:hover {
     background: none;
-    transform: scale(1.5) translate(10px);
+    transform: scale(1.2) translate(10px);
     color: black;
 }
 

@@ -24,9 +24,6 @@ namespace PL.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 //var user = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
-
-
-                return RedirectToAction("Index", "Profile");
             }
             //return RedirectToAction("Login", "Account");
             return View();

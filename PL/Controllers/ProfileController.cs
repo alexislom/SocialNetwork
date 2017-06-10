@@ -71,13 +71,15 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+            var user = profileService.GetById(id);
+            
+            return View(user.ToEditUserProfile());
         }
 
         [HttpPost]
-        public ActionResult Edit(ProfileEditModel model, HttpPostedFileBase file = null)
+        public String Edit(ProfileEditModel model, HttpPostedFileBase file = null)
         {
             var profileToEdit = profileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
 
@@ -87,7 +89,8 @@ namespace PL.Controllers
 
             profileService.Update(model.ToUpdatingBllProfile());
 
-            return RedirectToAction("Index");
+            return "Yippekiyay mfk";
+            
         }
 
         public FileResult GetImage(int id)
@@ -139,5 +142,7 @@ namespace PL.Controllers
                 }
             }
         }
+
+
     }
 }

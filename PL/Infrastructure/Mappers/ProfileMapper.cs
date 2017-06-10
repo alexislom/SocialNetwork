@@ -74,5 +74,19 @@ namespace PL.Infrastructure.Mappers
                 MobilePhoneNumber = model.MobilePhoneNumber
             };
         }
+
+        public static ProfileEditModel ToEditUserProfile(this BllUserProfile model)
+        {
+            return new ProfileEditModel()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Status = model.Status,
+                City = model.City,
+                MobilePhoneNumber = model.MobilePhoneNumber
+            };
+        }
     }
 }

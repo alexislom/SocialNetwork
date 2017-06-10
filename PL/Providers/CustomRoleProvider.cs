@@ -10,15 +10,11 @@ namespace PL.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
-        public IUserService UserService
-        {
-            get { return (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService)); }
-        }
+        public IUserService UserService => 
+            (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
 
-        public IRoleService RoleService
-        {
-            get { return (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService)); }
-        }
+        public IRoleService RoleService => 
+            (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
 
         public override string ApplicationName { get; set; }
 
@@ -34,15 +30,17 @@ namespace PL.Providers
         {
             var roles = new string[] { };
             var user = UserService.GetOneByPredicate(u => u.UserName == username);
-            if (user == null)
-                return roles;
-            var role = RoleService.GetById(user.RoleId);
-            return new string[] { role.Name };
+            if (user != null)
+            {
+                var role = RoleService.GetById(user.RoleId);
+                return new[] {role.Name};
+            }
+            return roles;
         }
 
         public override void CreateRole(string roleName)
         {
-            var role = new BllRole() { Name = roleName };
+            var role = new BllRole { Name = roleName };
             RoleService.Create(role);
         }
 

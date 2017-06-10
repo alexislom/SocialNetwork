@@ -13,7 +13,7 @@ namespace ORM.EF
     {
         #region Constructors
 
-        public SocialNetworkContext() : base("SocialNetworkDatabase") { }
+        public SocialNetworkContext() : base("SocialNetworkDB") { }
 
         public SocialNetworkContext(string connectionString) : base(connectionString) { }
 

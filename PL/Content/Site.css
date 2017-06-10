@@ -21,4 +21,10 @@ input,
 select,
 textarea {
     max-width: 280px;
+    resize: none;
+}
+
+hr {
+    background: black;
+    height: 2px;
 }

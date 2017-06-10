@@ -18,20 +18,21 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public ActionResult Index()
         {
             //if (User.Identity.IsAuthenticated)
             //{
-                var user = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
+                //var user = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
 
-                if (User.IsInRole("BannedUser"))
-                {
-                    return View("Error");
-                }
-                return RedirectToAction("Index", "Profile");
+                //if (User.IsInRole("BannedUser"))
+                //{
+                //    return View("Error");
+                //}
+                //return RedirectToAction("Index", "Profile");
             //}
             //return RedirectToAction("Login", "Account");
+            return View();
         }
     }
 }

@@ -10,25 +10,21 @@ namespace PL.Providers
 {
     public class CustomMembershipProvider : MembershipProvider
     {
-        public IUserService UserService
-        {
-            get { return (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService)); }
-        }
+        public IUserService UserService => 
+            (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
 
-        public IRoleService RoleService
-        {
-            get { return (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService)); }
-        }
+        public IRoleService RoleService => 
+            (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
 
         public MembershipUser CreateUser(string email, string name, string password)
         {
             var photo = new BllPhoto();
-            var profile = new BllUserProfile()
+            var profile = new BllUserProfile
             {
                 NickName = name,
                 Photo = photo
             };
-            var user = new BllUser()
+            var user = new BllUser
             {
                 Email = email,
                 UserName = name,
@@ -46,11 +42,7 @@ namespace PL.Providers
         {
             var user = UserService.GetOneByPredicate(u => u.UserName == name);
 
-            if (user != null && user.Password == password)
-            {
-                return true;
-            }
-            return false;
+            return user != null && user.Password == password;
         }
 
         public override MembershipUser GetUser(string name, bool userIsOnline)

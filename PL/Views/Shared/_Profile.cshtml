@@ -37,13 +37,14 @@
     </div>
     <div class="col-md-7 col-lg-7">
         @if (string.Format("{0} {1}", Model.FirstName, Model.LastName).Length > 18)
-            {
+        {
             <h2>@Model.FirstName @Model.LastName</h2>
         }
         else
         {
             <h1>@Model.FirstName @Model.LastName</h1>
         }
+        <hr class="cust-hr"/>
         @if (Model.DateOfBirth != null)
         {
             <p>Birth Date: @Model.DateOfBirth.Value.ToString("d MMM yyyy") </p>
@@ -61,17 +62,24 @@
         }
 
         @if (Model.City != null)
-            {
+        {
             <p>City: @Model.City</p>
         }
         @if (Model.MobilePhoneNumber != null)
-            {
+        {
             <p>Contact Phohe: @Model.MobilePhoneNumber</p>
         }
         @if (Model.Status != null)
-            {
+        {
             <p>@Model.Status</p>
         }
+        @if (Model.NickName == User.Identity.Name)
+        {
+            <hr/>
+            Html.RenderAction("Edit", "Profile",new {id=Model.Id});
+        }
+        <div id="test">Empty</div>
     </div>
+
 </div>
 

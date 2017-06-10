@@ -1,14 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using PL.Models;
 using BLL.Interface.Interfaces;
 using PL.Models.User;
 using PL.Providers;
@@ -52,7 +43,7 @@ namespace PL.Controllers
                 if (new CustomMembershipProvider().ValidateUser(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return RedirectToAction("Index", "Profile");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                     ModelState.AddModelError("", "Invalid username or password");
@@ -83,11 +74,11 @@ namespace PL.Controllers
                 return View(viewModel);
             }
 
-            if (viewModel.Captcha != (string)Session["code"])
-            {
-                ModelState.AddModelError("Captcha", "Incorrect input.");
-                return View(viewModel);
-            }
+            //if (viewModel.Captcha != (string)Session["code"])
+            //{
+            //    ModelState.AddModelError("Captcha", "Incorrect input.");
+            //    return View(viewModel);
+            //}
 
             if (ModelState.IsValid)
             {

@@ -44,8 +44,8 @@ namespace PL.Models.User
         [Compare("UserPassword", ErrorMessage = "The password and confirmation password do not match")]
         public string PasswordConfirm { get; set; }
 
-        [Required(ErrorMessage = "The code from the image is required")]
-        [Display(Name = "Enter the code from the image")]
-        public string Captcha { get; set; }
+        //[Required(ErrorMessage = "The code from the image is required")]
+        //[Display(Name = "Enter the code from the image")]
+        //public string Captcha { get; set; }
     }
 }

@@ -27,18 +27,20 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(SearchModel model)
+        public ActionResult Search(FullProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = profileService.Search(new BllUserProfile()
+                var result = profileService.Search(new BllUserProfile
                 {
                     NickName = model.NickName,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     City = model.City,
                     Gender = model.Gender
-                }).Select(p => p.ToMvcProfile()).ToList();
+                }).Select(x=>x.ToFullMvcProfile())
+                    .ToList()
+                    .OrderByDescending(x=>x.CompareToObject(model));
                 ViewBag.Title = "Search Results";
                 ViewBag.EmptyMessage = "No results...";
                 return View("_ProfilesViewList", result);
@@ -95,7 +97,7 @@ namespace PL.Controllers
             profileService.Update(model.ToUpdatingBllProfile());
 
             FullProfileViewModel obj1 = profileService.GetById(model.Id).ToFullMvcProfile();
-            return PartialView("Test", obj1);
+            return PartialView("_Profile", obj1);
 
         }
 

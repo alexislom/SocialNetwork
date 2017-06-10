@@ -14,7 +14,15 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+                <li>
+                    @*@Ajax.ActionLink("Search","Search","Profile",null,new AjaxOptions()
+                    {
+                        UpdateTargetId = "main_container",
+                        LoadingElementId = "loading",
+                        OnBegin = "hideContent",
+                        OnComplete = "unhideContent"
+                    })*@
+                </li>
                 <li><a>Hi @User.Identity.Name</a></li>
                 <li>@Html.ActionLink("Logout", "LogOff", "Account")</li>
             }

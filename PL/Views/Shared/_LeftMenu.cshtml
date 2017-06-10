@@ -4,78 +4,76 @@
     <div class="row">
         <ul class="nav text-left">
             <li>
-                @Ajax.ActionLinkWithGlyphicon("fa fa-home", "My page", "Index", "Profile", 
+
+           @Ajax.ActionLink("My page", "Index", "Profile", null, new AjaxOptions()
+           {
+               UpdateTargetId = "main_container",
+               LoadingElementId = "loading",
+               OnBegin = "hideContent",
+               OnComplete = "unhideContent"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLinkWithGlyphicon("fa fa-users", "My friends", "Friends", "Friend",
                     new AjaxOptions
                     {
-                       UpdateTargetId = "main_container",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loading",
-                       AllowCache = false,
-                       OnBegin = "hideContent",
-                       OnComplete = "unhideContent"
+                        UpdateTargetId = "main_container",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "loading",
+                        AllowCache = false,
+                        OnBegin = "hideContent",
+                        OnComplete = "unhideContent"
                     })
             </li>
             <li>
-                @Ajax.ActionLinkWithGlyphicon("fa fa-users", "My friends", "Friends", "Friend", 
+                @Ajax.ActionLinkWithGlyphicon("fa fa-user-plus", "Friendship requests", "FriendRequests", "Friend",
                     new AjaxOptions
                     {
-                       UpdateTargetId = "main_container",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loading",
-                       AllowCache = false,
-                       OnBegin = "hideContent",
-                       OnComplete = "unhideContent"
+                        UpdateTargetId = "main_container",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "loading",
+                        AllowCache = false,
+                        OnBegin = "hideContent",
+                        OnComplete = "unhideContent"
                     })
             </li>
             <li>
-                @Ajax.ActionLinkWithGlyphicon("fa fa-user-plus", "Friendship requests", "FriendRequests", "Friend", 
+                @Ajax.ActionLinkWithGlyphicon("fa fa-envelope", "My Messages", "Dialogs", "Message",
                     new AjaxOptions
                     {
-                       UpdateTargetId = "main_container",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loading",
-                       AllowCache = false,
-                       OnBegin = "hideContent",
-                       OnComplete = "unhideContent"
-                    })
-            </li>
-            <li>
-                @Ajax.ActionLinkWithGlyphicon("fa fa-envelope", "My Messages", "Dialogs", "Message", 
-                    new AjaxOptions
-                    {
-                       UpdateTargetId = "main_container",
-                       InsertionMode = InsertionMode.Replace,
-                       LoadingElementId = "loading",
-                       AllowCache = false,
-                       OnBegin = "hideContent",
-                       OnComplete = "unhideContent"
+                        UpdateTargetId = "main_container",
+                        InsertionMode = InsertionMode.Replace,
+                        LoadingElementId = "loading",
+                        AllowCache = false,
+                        OnBegin = "hideContent",
+                        OnComplete = "unhideContent"
                     })
 
             </li>
             @if (User.IsInRole("Admin"))
             {
                 <li>
-                    @Ajax.ActionLinkWithGlyphicon("fa fa-cogs", "Manage users", "GetAllUsers", "Account", 
+                    @Ajax.ActionLinkWithGlyphicon("fa fa-cogs", "Manage users", "GetAllUsers", "Account",
                         new AjaxOptions
                         {
-                           UpdateTargetId = "main_container",
-                           InsertionMode = InsertionMode.Replace,
-                           LoadingElementId = "loading",
-                           AllowCache = false,
-                           OnBegin = "hideContent",
-                           OnComplete = "unhideContent"
+                            UpdateTargetId = "main_container",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "loading",
+                            AllowCache = false,
+                            OnBegin = "hideContent",
+                            OnComplete = "unhideContent"
                         })
                 </li>
                 <li>
-                    @Ajax.ActionLinkWithGlyphicon("fa fa-filter", "Filter messages", "GetUsers", "Account", 
+                    @Ajax.ActionLinkWithGlyphicon("fa fa-filter", "Filter messages", "GetUsers", "Account",
                         new AjaxOptions
                         {
-                           UpdateTargetId = "main_container",
-                           InsertionMode = InsertionMode.Replace,
-                           LoadingElementId = "loading",
-                           AllowCache = false,
-                           OnBegin = "hideContent",
-                           OnComplete = "unhideContent"
+                            UpdateTargetId = "main_container",
+                            InsertionMode = InsertionMode.Replace,
+                            LoadingElementId = "loading",
+                            AllowCache = false,
+                            OnBegin = "hideContent",
+                            OnComplete = "unhideContent"
                         })
                 </li>
             }

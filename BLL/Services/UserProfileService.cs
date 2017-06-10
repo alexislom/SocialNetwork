@@ -71,14 +71,11 @@ namespace BLL.Services
 
         public IEnumerable<BllUserProfile> Search(BllUserProfile profile)
         {
-            //var resultSet = new HashSet<BllUserProfile>(new BllProfileComparer());
-            //SearchByStringParameter(profile.NickName, ref resultSet, p => p.NickName.Contains(profile.NickName));
-            //SearchByStringParameter(profile.FirstName, ref resultSet, p => p.FirstName.Contains(profile.FirstName));
-            //SearchByStringParameter(profile.LastName, ref resultSet, p => p.LastName.Contains(profile.LastName));
-            //SearchByStringParameter(profile.City, ref resultSet, p => p.City.Contains(profile.City));
-            //var result = resultSet.Where(p => p.Gender == profile.Gender).Select(p => p).ToList();
-            return null;
+            var result = profileRepository.GetAllByPredicate(x => x.FirstName == profile.FirstName ||
+                                                     x.LastName == profile.LastName || x.City==profile.City);
+            return result.Select(x=>x.ToBllUserProfile());
         }
+
 
         private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection, 
                                                 Expression<Func<DalUserProfile, bool>> predicates)

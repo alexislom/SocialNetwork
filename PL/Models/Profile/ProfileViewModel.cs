@@ -13,5 +13,8 @@ namespace PL.Models.Profile
         public string LastName { get; set; }
         public int? PhotoId { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string City { get; set; }
+        public bool? Gender { get; set; }
+
     }
 }

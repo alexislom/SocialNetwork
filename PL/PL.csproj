@@ -213,7 +213,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\FriendRequestController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -231,7 +231,7 @@
     <Compile Include="Models\Profile\ProfileEditModel.cs" />
     <Compile Include="Models\Profile\ProfileViewModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
-    <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\Profile\SearchUserModel.cs" />
     <Compile Include="Models\User\LogViewModel.cs" />
     <Compile Include="Models\User\RegisterViewModel.cs" />
     <Compile Include="Models\User\UsersEditModel.cs" />

@@ -31,7 +31,9 @@ namespace PL.Infrastructure.Mappers
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
                 NickName = profile.NickName,
-                PhotoId = profile.PhotoId
+                PhotoId = profile.PhotoId,
+                City = profile.City,
+                Gender = profile.Gender
             };
         }
 
@@ -88,5 +90,19 @@ namespace PL.Infrastructure.Mappers
                 MobilePhoneNumber = model.MobilePhoneNumber
             };
         }
+
+        //public static SearchUserModel ToSearchUserProfile(this BllUserProfile profile)
+        //{
+        //    return new SearchUserModel()
+        //    {
+        //        Id = profile.Id,
+        //        FirstName = profile.FirstName,
+        //        LastName = profile.LastName,
+        //        NickName = profile.NickName,
+        //        Gender = profile.Gender,
+        //        City = profile.City,
+        //        //EqualsCoeff = 0
+        //    };
+        //}
     }
 }

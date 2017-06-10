@@ -14,7 +14,7 @@
             <div class="modal-body">
                 
                 @*Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"})*@
-                @using (Ajax.BeginForm("Edit",null,new AjaxOptions(){UpdateTargetId = "test"}, new { @class = "form-horizontal" }))
+                @using (Ajax.BeginForm("Edit",null,new AjaxOptions(){UpdateTargetId = "test" }, new { @class = "form-horizontal" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})

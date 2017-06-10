@@ -79,7 +79,7 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public String Edit(ProfileEditModel model, HttpPostedFileBase file = null)
+        public ActionResult Edit(ProfileEditModel model, HttpPostedFileBase file = null)
         {
             var profileToEdit = profileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
 
@@ -89,8 +89,9 @@ namespace PL.Controllers
 
             profileService.Update(model.ToUpdatingBllProfile());
 
-            return "Yippekiyay mfk";
-            
+            FullProfileViewModel obj1 = profileService.GetById(model.Id).ToFullMvcProfile();
+            return PartialView("Test", obj1);
+
         }
 
         public FileResult GetImage(int id)

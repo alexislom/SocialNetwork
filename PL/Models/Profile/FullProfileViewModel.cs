@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +9,11 @@ namespace PL.Models.Profile
     public class FullProfileViewModel
     {
         public int Id { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
+
+        [Required]
         public string LastName { get; set; }
         public string NickName { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -22,7 +27,7 @@ namespace PL.Models.Profile
 
         public string Status { get; set; }
 
-        public int CompareToObject(FullProfileViewModel obj)
+        public int EqualityToSearchObject(FullProfileViewModel obj)
         {
             int equalCoeff = 0;
             if (obj.FirstName == FirstName)

@@ -40,7 +40,9 @@ namespace PL.Controllers
                     Gender = model.Gender
                 }).Select(x=>x.ToFullMvcProfile())
                     .ToList()
-                    .OrderByDescending(x=>x.CompareToObject(model));
+                    .OrderByDescending(x=>x.EqualityToSearchObject(model))
+                    .Where(x=>x.EqualityToSearchObject(model)>0);
+
                 ViewBag.Title = "Search Results";
                 ViewBag.EmptyMessage = "No results...";
                 return View("_ProfilesViewList", result);

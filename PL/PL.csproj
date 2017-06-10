@@ -314,6 +314,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\FriendRequest\" />

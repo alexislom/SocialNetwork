@@ -1,6 +1,56 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+
+    background: linear-gradient(4deg, #4163cc, #acb3c8, #4f51d7);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 53s ease infinite;
+    -moz-animation: AnimationName 53s ease infinite;
+    animation: AnimationName 53s ease infinite;
+
+
+}
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 51% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 51% 0%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 51% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 51% 0%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 51% 0%
+    }
+
+    50% {
+        background-position: 50% 100%
+    }
+
+    100% {
+        background-position: 51% 0%
+    }
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,7 +74,72 @@ textarea {
     resize: none;
 }
 
-hr {
+/*hr {
     background: black;
     height: 2px;
+}*/
+
+
+.modal-header {
+    background: #1995dc;
+    color: white;
+    border-radius: 15px 15px 0 0;
 }
+
+.modal-header h4 {
+    color: white;
+}
+.close {
+    transform: scale(2);
+}
+
+.modal-footer {
+    background: #1995dc;
+    color: white;
+    border-radius: 0 0  15px 15px;
+}
+
+.modal-content {
+    border-radius: 15px;
+}
+.login-group input {
+    max-width: none;
+}
+
+.fade-in-anim {
+    animation: CustfadeIn 0.25s ease-in;
+}
+
+@keyframes CustfadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.left-menu a {
+    color: white;
+}
+
+
+.text-left li a {
+    /*background: red!important;*/
+    transition: 0.25s;
+}
+.text-left li a:hover {
+    background: none;
+    transform: scale(1.5) translate(10px);
+    color: black;
+}
+
+    .text-left li a:focus {
+        background: none;
+        color: black;
+    }
+
+
+
+
+

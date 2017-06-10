@@ -59,6 +59,11 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Profile()
+        {
             if (User.Identity.IsAuthenticated)
             {
                 var profile = profileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
@@ -71,9 +76,9 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            var user = profileService.GetById(id);
+            var user = profileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
             
             return View(user.ToEditUserProfile());
         }

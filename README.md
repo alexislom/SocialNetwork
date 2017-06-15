@@ -1,3 +1,3 @@
 Simple social network.
-EPAM course project by Alex Lomako
+EPAM training course project by Alex Lomako.
 

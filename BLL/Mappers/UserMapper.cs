@@ -9,7 +9,8 @@ namespace BLL.Mappers
         {
             if (bllUser == null)
                 return null;
-            var dalUser = new DalUser()
+
+            return new DalUser
             {
                 Id = bllUser.Id,
                 ProfileId = bllUser.ProfileId,
@@ -19,15 +20,14 @@ namespace BLL.Mappers
                 UserProfile = bllUser.UserProfile.ToDalUserProfile(),
                 UserName = bllUser.UserName
             };
-         
-            return dalUser;
         }
 
         public static BllUser ToBllUser(this DalUser dalUser)
         {
             if (dalUser == null)
                 return null;
-            return new BllUser()
+
+            return new BllUser
             {
                 Id = dalUser.Id,
                 ProfileId = dalUser.ProfileId,

@@ -20,17 +20,19 @@ namespace PL.Controllers
         public AccountController(IUserService userService, IUserProfileService userProfileService, IRoleService roleService,
             IFriendRequestService friendRequestService, IPhotoService photoService, IMessageService messageService)
         {
-            this._userService = userService;
-            this._userProfileService = userProfileService;
-            this._roleService = roleService;
-            this._messageService = messageService;
-            this._photoService = photoService;
-            this._friendRequestService = friendRequestService;
+            _userService = userService;
+            _userProfileService = userProfileService;
+            _roleService = roleService;
+            _messageService = messageService;
+            _photoService = photoService;
+            _friendRequestService = friendRequestService;
         }
 
         [HttpGet]
         public ActionResult Login()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -45,8 +47,7 @@ namespace PL.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                    ModelState.AddModelError("", "Invalid username or password");
+                ModelState.AddModelError("", "Invalid username or password");
             }
             return View(model);
         }
@@ -54,6 +55,8 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Register()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -62,23 +65,17 @@ namespace PL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel viewModel)
         {
-            if (_userService.GetOneByPredicate(u => u.Email == viewModel.UserEmail) != null)
-            {
-                ModelState.AddModelError("", "User with this email already registered.");
-                return View(viewModel);
-            }
-
             if (_userService.GetOneByPredicate(u => u.UserName == viewModel.UserName) != null)
             {
                 ModelState.AddModelError("", "User with this name already registered.");
                 return View(viewModel);
             }
 
-            //if (viewModel.Captcha != (string)Session["code"])
-            //{
-            //    ModelState.AddModelError("Captcha", "Incorrect input.");
-            //    return View(viewModel);
-            //}
+            if (_userService.GetOneByPredicate(u => u.Email == viewModel.UserEmail) != null)
+            {
+                ModelState.AddModelError("", "User with this email already registered.");
+                return View(viewModel);
+            }
 
             if (ModelState.IsValid)
             {

@@ -12,23 +12,8 @@ namespace PL.Models.Profile
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
+        [Required]
         public bool? Gender { get; set; }
         public string City { get; set; }
-
-        public int CompareToObject(SearchUserModel obj)
-        {
-            int equalCoeff = 0;
-            if (obj.FirstName == FirstName)
-                equalCoeff++;
-            if (obj.LastName == LastName)
-                equalCoeff++;
-            if (obj.City == City)
-                equalCoeff++;
-            if (obj.Gender == Gender)
-                equalCoeff++;
-            if (obj.NickName == NickName)
-                equalCoeff++;
-            return equalCoeff;
-        }
     }
 }

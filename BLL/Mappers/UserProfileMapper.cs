@@ -9,7 +9,8 @@ namespace BLL.Mappers
         {
             if (dalProfile == null)
                 return null;
-            return new BllUserProfile()
+
+            return new BllUserProfile
             {
                 Id = dalProfile.Id,
                 FirstName = dalProfile.FirstName,
@@ -29,7 +30,8 @@ namespace BLL.Mappers
         {
             if (bllProfile == null)
                 return null;
-            return new DalUserProfile()
+
+            return new DalUserProfile
             {
                 Id = bllProfile.Id,
                 FirstName = bllProfile.FirstName,
@@ -42,7 +44,6 @@ namespace BLL.Mappers
                 City= bllProfile.City,
                 MobilePhoneNumber = bllProfile.MobilePhoneNumber,
                 Gender = bllProfile.Gender
-                
             };
         }
     }

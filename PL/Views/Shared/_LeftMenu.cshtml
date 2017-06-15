@@ -5,11 +5,23 @@
         <ul class="nav text-left">
             <li>
 
-           @Ajax.ActionLink("My page", "Index", "Profile", null, new AjaxOptions()
-           {
-               UpdateTargetId = "main_container"
-           })
+                @Ajax.ActionLink("My page", "Index", "Profile", null, new AjaxOptions()
+                {
+                    UpdateTargetId = "main_container"
+                })
             </li>
+            @*<li>
+                @Ajax.ActionLinkWithGlyphicon("fa fa-home","My page", "Index", "Profile", new AjaxOptions
+           {
+               UpdateTargetId = "main_container",
+               InsertionMode = InsertionMode.Replace,
+               LoadingElementId = "loading",
+               AllowCache = false,
+               //OnBegin = "hideContent",
+               //OnComplete = "unhideContent"
+
+           }) 
+            </li>*@
             <li>
                 @Ajax.ActionLinkWithGlyphicon("fa fa-users", "My friends", "Friends", "Friend",
                     new AjaxOptions

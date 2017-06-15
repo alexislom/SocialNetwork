@@ -5,24 +5,28 @@ namespace BLL.Mappers
 {
     public static class RoleMapper
     {
-        public static BllRole ToBllRole(this DalRole role)
+        public static BllRole ToBllRole(this DalRole dalRole)
         {
-            var BllRole = new BllRole
+            if (dalRole == null)
+                return null;
+
+            return new BllRole
             {
-                Id = role.Id,
-                Name = role.Name
+                Id = dalRole.Id,
+                Name = dalRole.Name
             };
-            return BllRole;
         }
 
-        public static DalRole ToDalRole(this BllRole role)
+        public static DalRole ToDalRole(this BllRole bllRole)
         {
-            var dalRole = new DalRole
+            if (bllRole == null)
+                return null;
+
+            return new DalRole
             {
-                Id = role.Id,
-                Name = role.Name
+                Id = bllRole.Id,
+                Name = bllRole.Name
             };
-            return dalRole;
         }
     }
 }

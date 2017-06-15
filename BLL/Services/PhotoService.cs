@@ -13,29 +13,52 @@ namespace BLL.Services
 {
     public class PhotoService : IPhotoService
     {
-        private readonly IPhotoRepository photoRepository;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IPhotoRepository _photoRepository;
 
         public PhotoService(IUnitOfWork unitOfWork, IPhotoRepository photoRepository)
         {
-            this.photoRepository = photoRepository;
-            this.unitOfWork = unitOfWork;
+            _photoRepository = photoRepository;
+            _unitOfWork = unitOfWork;
         }
+
+        #region CRUD operations
+
         public void Create(BllPhoto item)
         {
-            photoRepository.Create(item.ToDalPhoto());
-            unitOfWork.Commit();
+            _photoRepository.Create(item.ToDalPhoto());
+            _unitOfWork.Commit();
+        }
+
+        public void Update(BllPhoto item)
+        {
+            _photoRepository.Update(item.ToDalPhoto());
+            _unitOfWork.Commit();
         }
 
         public void Delete(BllPhoto item)
         {
-            photoRepository.Delete(item.ToDalPhoto());
-            unitOfWork.Commit();
+            _photoRepository.Delete(item.ToDalPhoto());
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        #region Get profiles
+
+        public BllPhoto GetById(int id)
+        {
+            return _photoRepository.GetById(id).ToBllPhoto();
         }
 
         public IEnumerable<BllPhoto> GetAll()
         {
-            return photoRepository.GetAll().Select(p => p.ToBllPhoto()).ToList();
+            return _photoRepository.GetAll().Select(p => p.ToBllPhoto()).ToList();
+        }
+
+        public BllPhoto GetOneByPredicate(Expression<Func<BllPhoto, bool>> predicates)
+        {
+            return GetAllByPredicate(predicates).FirstOrDefault();
         }
 
         public IEnumerable<BllPhoto> GetAllByPredicate(Expression<Func<BllPhoto, bool>> predicates)
@@ -44,23 +67,9 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalPhoto), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalPhoto, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            return photoRepository.GetAllByPredicate(exp).Select(p => p.ToBllPhoto()).ToList();
+            return _photoRepository.GetAllByPredicate(exp).Select(p => p.ToBllPhoto()).ToList();
         }
 
-        public BllPhoto GetById(int id)
-        {
-            return photoRepository.GetById(id).ToBllPhoto();
-        }
-
-        public BllPhoto GetOneByPredicate(Expression<Func<BllPhoto, bool>> predicates)
-        {
-            return GetAllByPredicate(predicates).FirstOrDefault();
-        }
-
-        public void Update(BllPhoto item)
-        {
-            photoRepository.Update(item.ToDalPhoto());
-            unitOfWork.Commit();
-        }
+        #endregion
     }
 }

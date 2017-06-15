@@ -18,14 +18,8 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                //var user = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
-            }
-            //return RedirectToAction("Login", "Account");
             return View();
         }
     }

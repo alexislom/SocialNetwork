@@ -10,22 +10,22 @@
 
     <h3>Registration</h3>
     <hr />
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.UserName)
         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Enter login" })
         @Html.ValidationMessageFor(m => m.UserName)
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.FirstName)
         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "Enter first name" })
         @Html.ValidationMessageFor(m => m.FirstName)
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.LastName)
         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Enter last name" })
         @Html.ValidationMessageFor(m => m.LastName)
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.Gender)
         <div>
             @Html.RadioButtonFor(m => m.Gender, "true", new { id = "male_true" })
@@ -35,17 +35,17 @@
             @Html.ValidationMessageFor(m => m.Gender)
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.UserEmail)
         @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control", @placeholder = "Enter Email" })
         @Html.ValidationMessageFor(m => m.UserEmail)
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.UserPassword)
         @Html.TextBoxFor(m => m.UserPassword, new { @class = "form-control", @placeholder = "Enter password", @type = "password" })
         @Html.ValidationMessageFor(m => m.UserPassword)
     </div>
-    <div class="form-group">
+    <div class="form-group login-group">
         @Html.LabelFor(m => m.PasswordConfirm)
         @Html.TextBoxFor(m => m.PasswordConfirm, new { @class = "form-control", @placeholder = "Confirm password", @type = "password" })
         @Html.ValidationMessageFor(m => m.PasswordConfirm)

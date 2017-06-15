@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL.Interface.Interfaces;
+using BLL.Interface.Entities;
 using PL.Infrastructure;
 using PL.Infrastructure.Mappers;
 using PL.Models.Profile;
@@ -13,23 +14,25 @@ namespace PL.Controllers
     [CustomAuthorize]
     public class FriendController : Controller
     {
-        private readonly IFriendRequestService friendshipService;
-        private readonly IUserService userService;
-        private readonly IUserProfileService profileService;
+        private readonly IFriendRequestService _friendRequestService;
+        private readonly IUserService _userService;
+        private readonly IUserProfileService _userProfileService;
 
-        public FriendController(IFriendRequestService friendshipService, IUserService userService, IUserProfileService profileService)
+        public FriendController(IFriendRequestService friendRequestService, IUserService userService, IUserProfileService userProfileService)
         {
-            this.friendshipService = friendshipService;
-            this.userService = userService;
-            this.profileService = profileService;
+            _friendRequestService = friendRequestService;
+            _userService = userService;
+            _userProfileService = userProfileService;
         }
 
         public ActionResult AddToFriend(int id)
         {
-            var userId = userService.GetOneByPredicate(u => u.UserName == User.Identity.Name).Id;
+            var userId = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name).Id;
 
-            if (!(friendshipService.IsFriend(userId, id) || friendshipService.IsRequested(userId, id)))
-                friendshipService.AddFriend(userId, id);
+            if (!(_friendRequestService.IsFriend(userId, id) || _friendRequestService.IsRequested(userId, id)))
+            {
+                _friendRequestService.AddFriend(userId, id);
+            }
 
             ViewBag.IsFriend = true;
 
@@ -37,14 +40,14 @@ namespace PL.Controllers
         }
         public ActionResult FriendRequests()
         {
-            var curUserId = profileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
+            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
 
-            var requests = friendshipService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
+            var requests = _friendRequestService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
 
             var requestsModelList = new List<ProfileViewModel>();
 
             foreach (var item in requests)
-                requestsModelList.Add(userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
+                requestsModelList.Add(_userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
             if (Request.IsAjaxRequest())
                 return PartialView("_RequestsList", requestsModelList);
             return View("_RequestsList", requestsModelList);
@@ -52,9 +55,9 @@ namespace PL.Controllers
 
         public ActionResult Friends()
         {
-            var curUserId = profileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
+            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
 
-            var friends = friendshipService.GetAllByPredicate(u =>
+            var friends = _friendRequestService.GetAllByPredicate(u =>
                 (u.UserFromId == curUserId && u.IsConfirmed == true) |
                 (u.UserToId == curUserId && u.IsConfirmed == true)).ToList();
 
@@ -63,10 +66,11 @@ namespace PL.Controllers
             foreach (var item in friends)
             {
                 var friendId = (int)(item.UserFromId == curUserId ? item.UserToId : item.UserFromId);
-                profileList.Add(profileService.GetById(friendId).ToMvcProfile());
+                profileList.Add(_userProfileService.GetById(friendId).ToMvcProfile());
             }
             ViewBag.Title = "Friends";
             ViewBag.EmptyMessage = "You don't have friends...Use search to find them!!!";
+
             if (Request.IsAjaxRequest())
                 return PartialView("_ProfilesViewList", profileList);
 
@@ -75,28 +79,28 @@ namespace PL.Controllers
 
         public ActionResult ConfirmFriend(string username)
         {
-            var userToConfirmId = userService.GetOneByPredicate(u => u.UserName == username).Id;
+            var userToConfirmId = _userService.GetOneByPredicate(u => u.UserName == username).Id;
 
-            var currentUser = userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
+            var currentUser = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name);
 
-            var request = friendshipService.GetOneByPredicate(r => r.UserFromId == userToConfirmId && r.UserToId == currentUser.Id);
+            var request = _friendRequestService.GetOneByPredicate(r => r.UserFromId == userToConfirmId && r.UserToId == currentUser.Id);
 
             request.IsConfirmed = true;
 
-            friendshipService.Update(request);
+            _friendRequestService.Update(request);
 
             return RedirectToAction("Index", "Profile");
         }
 
         public ActionResult RemoveFriend(int id)
         {
-            var currentUser = profileService.GetOneByPredicate(f => f.NickName == User.Identity.Name);
+            var currentUser = _userProfileService.GetOneByPredicate(f => f.NickName == User.Identity.Name);
 
-            var friendship = friendshipService.GetOneByPredicate(f =>
+            var friendship = _friendRequestService.GetOneByPredicate(f =>
                 (f.UserFromId == id && f.UserToId == currentUser.Id) ||
                 (f.UserFromId == currentUser.Id && f.UserToId == id));
 
-            friendshipService.Delete(friendship);
+            _friendRequestService.Delete(friendship);
 
             ViewBag.IsFriend = false;
 

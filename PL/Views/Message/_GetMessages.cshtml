@@ -1,0 +1,71 @@
+﻿@model PL.Models.Message.MessagesViewModel
+@{
+    ViewBag.Title = "Messages";
+}
+<style>
+    
+    textarea{
+        resize:none;
+    }
+</style>
+
+<script src="~/Scripts/customJS.js"></script>
+@foreach (var m in Model.Messages)
+{
+    <div class="row">
+            
+        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">                   
+            <img src="@Url.Action("GetImage", "Profile", new { Id = m.SenderId})" class="img-circle img-responsive"/>
+        </div>
+
+        <div class="col-xs-8">
+            <div class="row">
+                <h3>
+                    @m.Sender.FirstName
+                       
+                </h3>
+            </div>
+
+            <div class="row">
+                <small>
+                    <i>Posted @m.SendTime.ToShortTimeString()</i>
+                </small>
+            </div>
+            <div class="row"><h4> @m.Text</h4></div>
+        </div>
+                
+    </div>
+}
+<div id="new_message"></div> 
+        
+<div class="text-center">
+    @using (Ajax.BeginForm("SendMessage", "Message", FormMethod.Post,new AjaxOptions
+    {
+        UpdateTargetId = "new_message",
+        InsertionMode = InsertionMode.ReplaceWith,
+        AllowCache = false
+    }))
+    {
+        @Html.Hidden("receiverId", @Model.InterlocutorId);
+        @Html.Hidden("senderId", @Model.UserId);
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 form-group"> @Html.TextArea("messageText", new
+                                                              {
+                                                                  @rows = 5,
+                                                                  @class = "form-control",
+                                                                  @id = "text",
+                          
+                                                              })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-6 form-group">
+                            
+                <button type="submit" class="btn btn-success btn-block glyphicon glyphicon-send" id="messageSubmit">
+                    Send
+                </button>
+            </div>
+        </div>
+    }
+</div>
+

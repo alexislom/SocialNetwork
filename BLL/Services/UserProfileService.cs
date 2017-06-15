@@ -7,37 +7,59 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using BLL.Mappers;
 
 namespace BLL.Services
 {
     public class UserProfileService : IUserProfileService
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IUserProfileRepository profileRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserProfileRepository _userProfileRepository;
 
-        public UserProfileService(IUnitOfWork unitOfWork, IUserProfileRepository profileRepository)
+        public UserProfileService(IUnitOfWork unitOfWork, IUserProfileRepository userProfileRepository)
         {
-            this.unitOfWork = unitOfWork;
-            this.profileRepository = profileRepository;
+            _unitOfWork = unitOfWork;
+            _userProfileRepository = userProfileRepository;
         }
+
+        #region CRUD operations
+
         public void Create(BllUserProfile item)
         {
-            profileRepository.Create(item.ToDalUserProfile());
-            unitOfWork.Commit();
+            _userProfileRepository.Create(item.ToDalUserProfile());
+            _unitOfWork.Commit();
+        }
+
+        public void Update(BllUserProfile item)
+        {
+            _userProfileRepository.Update(item.ToDalUserProfile());
+            _unitOfWork.Commit();
         }
 
         public void Delete(BllUserProfile item)
         {
-            profileRepository.Delete(item.ToDalUserProfile());
-            unitOfWork.Commit();
+            _userProfileRepository.Delete(item.ToDalUserProfile());
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        #region Get profiles
+
+        public BllUserProfile GetById(int id)
+        {
+            var profile = _userProfileRepository.GetById(id);
+            return profile == null ? null : profile.ToBllUserProfile();
         }
 
         public IEnumerable<BllUserProfile> GetAll()
         {
-            return profileRepository.GetAll().Select(p => p.ToBllUserProfile());
+            return _userProfileRepository.GetAll().Select(p => p.ToBllUserProfile());
+        }
+
+        public BllUserProfile GetOneByPredicate(Expression<Func<BllUserProfile, bool>> predicates)
+        {
+            return GetAllByPredicate(predicates).FirstOrDefault();
         }
 
         public IEnumerable<BllUserProfile> GetAllByPredicate(Expression<Func<BllUserProfile, bool>> predicates)
@@ -46,39 +68,28 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalUserProfile), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalUserProfile, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            return profileRepository.GetAllByPredicate(exp).Select(p => p.ToBllUserProfile()).ToList();
+            return _userProfileRepository.GetAllByPredicate(exp).Select(p => p.ToBllUserProfile()).ToList();
         }
 
-        public BllUserProfile GetById(int id)
-        {
-            var profile = profileRepository.GetById(id);
-            if (profile == null)
-                return null;
+        #endregion
 
-            return profile.ToBllUserProfile();
-        }
-
-        public BllUserProfile GetOneByPredicate(Expression<Func<BllUserProfile, bool>> predicates)
-        {
-            return GetAllByPredicate(predicates).FirstOrDefault();
-        }
-
-        public void Update(BllUserProfile item)
-        {
-            profileRepository.Update(item.ToDalUserProfile());
-            unitOfWork.Commit();
-        }
+        #region  Search
 
         public IEnumerable<BllUserProfile> Search(BllUserProfile profile)
         {
-            var result = profileRepository.GetAllByPredicate(x => x.FirstName == profile.FirstName ||
-                                                     x.LastName == profile.LastName || x.City==profile.City);
-            return result.Select(x=>x.ToBllUserProfile());
+            var result = _userProfileRepository.GetAll();
+            if (!string.IsNullOrEmpty(profile.FirstName))
+                result = result.Where(c => (c.FirstName.ToLower()).Contains(profile.FirstName.ToLower()));
+            if (!string.IsNullOrEmpty(profile.LastName))
+                result = result.Where(c => (c.LastName.ToLower()).Contains(profile.LastName.ToLower()));
+            if (!string.IsNullOrEmpty(profile.City))
+                result = result.Where(c => (c.City.ToLower()).Contains(profile.City.ToLower()));
+
+            return result.Select(x => x.ToBllUserProfile());
         }
 
-
-        private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection, 
-                                                Expression<Func<DalUserProfile, bool>> predicates)
+        private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection,
+            Expression<Func<DalUserProfile, bool>> predicates)
         {
             //if (parameter != null)
             //{
@@ -91,5 +102,7 @@ namespace BLL.Services
             //        collection.IntersectWith(bllProfileList);
             //}
         }
+
+        #endregion
     }
 }

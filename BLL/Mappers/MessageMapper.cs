@@ -1,9 +1,4 @@
 ﻿using DAL.Interfaces.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BLL.Interface.Entities;
 
 namespace BLL.Mappers
@@ -14,7 +9,8 @@ namespace BLL.Mappers
         {
             if (dalMessage == null)
                 return null;
-            return new BllMessage()
+
+            return new BllMessage
             {
                 Id = dalMessage.Id,
                 Date = dalMessage.Date,
@@ -29,7 +25,8 @@ namespace BLL.Mappers
         {
             if (ormMessage == null)
                 return null;
-            return new DalMessage()
+
+            return new DalMessage
             {
                 Id = ormMessage.Id,
                 Date = ormMessage.Date,

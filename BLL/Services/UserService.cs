@@ -13,30 +13,53 @@ namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
-            this.unitOfWork = unitOfWork;
-            this.userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
+
+        #region CRUD operations
 
         public void Create(BllUser item)
         {
-            userRepository.Create(item.ToDalUser());
-            unitOfWork.Commit();
+            _userRepository.Create(item.ToDalUser());
+            _unitOfWork.Commit();
+        }
+
+        public void Update(BllUser item)
+        {
+            _userRepository.Update(item.ToDalUser());
+            _unitOfWork.Commit();
         }
 
         public void Delete(BllUser item)
         {
-            userRepository.Delete(item.ToDalUser());
-            unitOfWork.Commit();
+            _userRepository.Delete(item.ToDalUser());
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        #region Get profiles
+
+        public BllUser GetById(int id)
+        {
+            var user = _userRepository.GetById(id);
+            return user == null ? null : user.ToBllUser();
         }
 
         public IEnumerable<BllUser> GetAll()
         {
-            return userRepository.GetAll().Select(u => u.ToBllUser());
+            return _userRepository.GetAll().Select(u => u.ToBllUser());
+        }
+
+        public BllUser GetOneByPredicate(Expression<Func<BllUser, bool>> predicates)
+        {
+            return GetAllByPredicate(predicates).FirstOrDefault();
         }
 
         public IEnumerable<BllUser> GetAllByPredicate(Expression<Func<BllUser, bool>> predicates)
@@ -45,27 +68,9 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalUser), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalUser, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            return userRepository.GetAllByPredicate(exp).Select(user => user.ToBllUser()).ToList();
+            return _userRepository.GetAllByPredicate(exp).Select(user => user.ToBllUser()).ToList();
         }
 
-        public BllUser GetById(int id)
-        {
-            var user = userRepository.GetById(id);
-            if (user == null)
-                return null;
-
-            return user.ToBllUser();
-        }
-
-        public BllUser GetOneByPredicate(Expression<Func<BllUser, bool>> predicates)
-        {
-            return GetAllByPredicate(predicates).FirstOrDefault();
-        }
-
-        public void Update(BllUser item)
-        {
-            userRepository.Update(item.ToDalUser());
-            unitOfWork.Commit();
-        }
+        #endregion
     }
 }

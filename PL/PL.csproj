@@ -222,11 +222,15 @@
     </Compile>
     <Compile Include="Infrastructure\AjaxHelperExtention.cs" />
     <Compile Include="Infrastructure\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Mappers\MessageMapper.cs" />
     <Compile Include="Infrastructure\Mappers\ProfileMapper.cs" />
     <Compile Include="Infrastructure\Mappers\RoleMapper.cs" />
     <Compile Include="Infrastructure\Mappers\UserMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\Message\MessageModel.cs" />
+    <Compile Include="Models\Message\MessagesViewModel.cs" />
     <Compile Include="Models\Profile\DialogProfile.cs" />
+    <Compile Include="Models\Profile\DialogViewModel.cs" />
     <Compile Include="Models\Profile\FullProfileViewModel.cs" />
     <Compile Include="Models\Profile\ProfileEditModel.cs" />
     <Compile Include="Models\Profile\ProfileViewModel.cs" />
@@ -315,11 +319,13 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Search.cshtml" />
+    <Content Include="Views\Friend\_RequestsList.cshtml" />
+    <Content Include="Views\Message\_GetMessages.cshtml" />
+    <Content Include="Views\Message\_Message.cshtml" />
+    <Content Include="Views\Message\_Dialogs.cshtml" />
+    <Content Include="Views\Message\GetUserMessages.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\FriendRequest\" />
-    <Folder Include="Views\Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

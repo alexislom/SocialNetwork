@@ -9,7 +9,8 @@ namespace BLL.Mappers
         {
             if (bllFriendship == null)
                 return null;
-            var dalFriendship = new DalFriendRequest()
+
+            return new DalFriendRequest
             {
                 Id = bllFriendship.Id,
                 RequestDate = bllFriendship.RequestDate,
@@ -17,13 +18,13 @@ namespace BLL.Mappers
                 UserFromId = bllFriendship.UserFromId,
                 IsConfirmed = bllFriendship.IsConfirmed      
             };
-            return dalFriendship;
         }
         public static BllFriendRequest ToBllFriendRequest(this DalFriendRequest dalFriendship)
         {
             if (dalFriendship == null)
                 return null;
-            var bllFriendship = new BllFriendRequest()
+
+            return new BllFriendRequest
             {
                 Id = dalFriendship.Id,
                 RequestDate = dalFriendship.RequestDate,
@@ -31,8 +32,6 @@ namespace BLL.Mappers
                 UserFromId = dalFriendship.UserFromId,
                 IsConfirmed = dalFriendship.IsConfirmed   
             };
-            return bllFriendship;
         }
-
     }
 }

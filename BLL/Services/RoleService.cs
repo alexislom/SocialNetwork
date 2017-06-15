@@ -19,9 +19,33 @@ namespace BLL.Services
 
         public RoleService(IUnitOfWork unitOfWork, IRoleRepository roleRepository)
         {
-            this._unitOfWork = unitOfWork;
-            this._roleRepository = roleRepository;
+            _unitOfWork = unitOfWork;
+            _roleRepository = roleRepository;
         }
+
+        #region CRUD operations
+
+        public void Create(BllRole item)
+        {
+            _roleRepository.Create(item.ToDalRole());
+            _unitOfWork.Commit();
+        }
+
+        public void Update(BllRole item)
+        {
+            _roleRepository.Update(item.ToDalRole());
+            _unitOfWork.Commit();
+        }
+
+        public void Delete(BllRole item)
+        {
+            _roleRepository.Delete(item.ToDalRole());
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        #region Get profiles
 
         public BllRole GetById(int id)
         {
@@ -47,22 +71,6 @@ namespace BLL.Services
             return _roleRepository.GetAllByPredicate(exp).Select(user => user.ToBllRole()).ToList();
         }
 
-        public void Create(BllRole item)
-        {
-            _roleRepository.Create(item.ToDalRole());
-            _unitOfWork.Commit();
-        }
-
-        public void Delete(BllRole item)
-        {
-            _roleRepository.Delete(item.ToDalRole());
-            _unitOfWork.Commit();
-        }
-
-        public void Update(BllRole item)
-        {
-            _roleRepository.Update(item.ToDalRole());
-            _unitOfWork.Commit();
-        }
+        #endregion
     }
 }

@@ -15,47 +15,48 @@ namespace BLL.Services
 {
     public class MessageService : IMessageService
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IMessageRepository messageRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMessageRepository _messageRepository;
 
         public MessageService(IUnitOfWork unitOfWork, IMessageRepository messageRepository)
         {
-            this.unitOfWork = unitOfWork;
-            this.messageRepository = messageRepository;
-        }
-        public BllMessage GetById(int id)
-        {
-            var message = messageRepository.GetById(id);
-            if (message == null)
-                return null;
-
-            return message.ToBllMessage();
+            _unitOfWork = unitOfWork;
+            _messageRepository = messageRepository;
         }
 
-        public IEnumerable<BllMessage> GetAll()
-        {
-            return messageRepository.GetAll().Select(m => m.ToBllMessage());
-        }
-        public IEnumerable<BllMessage> GetMessages(int UserFrom, int UserTo)
-        {
-            return messageRepository.GetMessages(UserFrom, UserTo).Select(m => m.ToBllMessage());
-        }
+        #region CRUD operations
+
         public void Create(BllMessage item)
         {
-            messageRepository.Create(item.ToDalMessage());
-            unitOfWork.Commit();
-        }
-
-        public void Delete(BllMessage item)
-        {
-            messageRepository.Delete(item.ToDalMessage());
-            unitOfWork.Commit();
+            _messageRepository.Create(item.ToDalMessage());
+            _unitOfWork.Commit();
         }
 
         public void Update(BllMessage item)
         {
-            messageRepository.Update(item.ToDalMessage());
-            unitOfWork.Commit();
+            _messageRepository.Update(item.ToDalMessage());
+            _unitOfWork.Commit();
+        }
+
+        public void Delete(BllMessage item)
+        {
+            _messageRepository.Delete(item.ToDalMessage());
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        #region Get profiles
+
+        public BllMessage GetById(int id)
+        {
+            var message = _messageRepository.GetById(id);
+            return message == null ? null : message.ToBllMessage();
+        }
+
+        public IEnumerable<BllMessage> GetAll()
+        {
+            return _messageRepository.GetAll().Select(m => m.ToBllMessage());
         }
 
         public BllMessage GetOneByPredicate(Expression<Func<BllMessage, bool>> predicates)
@@ -69,14 +70,17 @@ namespace BLL.Services
                 (Expression.Parameter(typeof(DalMessage), predicates.Parameters[0].Name));
             var exp = Expression.Lambda<Func<DalMessage, bool>>(visitor.Visit(predicates.Body), visitor.NewParameter);
 
-            return messageRepository.GetAllByPredicate(exp).Select(user => user.ToBllMessage()).ToList();
+            return _messageRepository.GetAllByPredicate(exp).Select(user => user.ToBllMessage()).ToList();
         }
 
+        #endregion
+
+        #region IMessageService
 
         public IEnumerable<BllMessage> GetAllChatsWith(int userId)
         {
             var messages = GetAllByPredicate(m => m.FromUserId == userId || m.ToUserId == userId);
-            HashSet<int?> usersId = new HashSet<int?>();
+            var usersId = new HashSet<int?>();
             foreach (var item in messages)
             {
                 if (item.FromUserId == userId)
@@ -87,8 +91,8 @@ namespace BLL.Services
             foreach (var item in usersId)
             {
                 var lastmsg = messages
-                    .Where(m => (m.FromUserId == item && m.ToUserId == userId) 
-                    || (m.ToUserId == item && m.FromUserId == userId)).Last();
+                    .Where(m => (m.FromUserId == item && m.ToUserId == userId)
+                                || (m.ToUserId == item && m.FromUserId == userId)).Last();
                 lastmsgList.Add(lastmsg);
             }
             return lastmsgList;
@@ -96,8 +100,15 @@ namespace BLL.Services
 
         public void DeleteAllUserMessagesById(int id)
         {
-            messageRepository.DeleteAllUserMessagesById(id);
-            unitOfWork.Commit();
+            _messageRepository.DeleteAllUserMessagesById(id);
+            _unitOfWork.Commit();
+        }
+
+        #endregion
+
+        public IEnumerable<BllMessage> GetMessages(int UserFrom, int UserTo)
+        {
+            return _messageRepository.GetMessages(UserFrom, UserTo).Select(m => m.ToBllMessage());
         }
     }
 }

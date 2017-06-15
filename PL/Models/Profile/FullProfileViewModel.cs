@@ -10,10 +10,7 @@ namespace PL.Models.Profile
     {
         public int Id { get; set; }
 
-        [Required]
         public string FirstName { get; set; }
-
-        [Required]
         public string LastName { get; set; }
         public string NickName { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -26,21 +23,5 @@ namespace PL.Models.Profile
         public string MobilePhoneNumber { get; set; }
 
         public string Status { get; set; }
-
-        public int EqualityToSearchObject(FullProfileViewModel obj)
-        {
-            int equalCoeff = 0;
-            if (obj.FirstName == FirstName)
-                equalCoeff++;
-            if (obj.LastName == LastName)
-                equalCoeff++;
-            if (obj.City == City)
-                equalCoeff++;
-            if (obj.Gender == Gender)
-                equalCoeff++;
-            if (obj.NickName == NickName)
-                equalCoeff++;
-            return equalCoeff;
-        }
     }
 }

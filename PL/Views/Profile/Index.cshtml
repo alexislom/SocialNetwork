@@ -1,10 +1,13 @@
 ﻿@{
     Layout = null;
 }
-<div id="user-profile" class="row fade-in-anim">
+@*<div id="user-profile" class="row fade-in-anim">
 
     <div id="user-info">
-        @Html.Action("Profile")
+        @Html.Action("Page","Profile")
     </div>
-    @Html.Action("Edit")
-</div>
+    @if (Request.IsAjaxRequest())
+    {
+        @Html.Action("Edit")
+    }
+</div>*@

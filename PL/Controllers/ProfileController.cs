@@ -24,69 +24,58 @@ namespace PL.Controllers
             _friendRequestService = friendRequestService;
         }
 
+        #region User page
+
         [HttpGet]
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Profile()
         {
             if (User.Identity.IsAuthenticated)
             {
                 var profile = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
                 var model = profile.ToFullMvcProfile();
+
                 if (Request.IsAjaxRequest())
                     return PartialView("_Profile", model);
                 return View("_Profile", model);
             }
             return RedirectToAction("Login", "Account");
+            //return View();
         }
 
-        [HttpGet]
-        public ActionResult Edit()
-        {
-            var user = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
-            
-            return View(user.ToEditUserProfile());
-        }
+        //public ActionResult Page()
+        //{
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        var profile = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
+        //        var model = profile.ToFullMvcProfile();
+        //        if (Request.IsAjaxRequest())
+        //            return PartialView("_Profile", model);
+        //        return View("_Profile", model);
+        //    }
+        //    return RedirectToAction("Login", "Account");
+        //}
+
+        #endregion
+
+        #region Search
 
         [HttpPost]
-        public ActionResult Edit(ProfileEditModel model, HttpPostedFileBase file = null)
-        {
-            var profileToEdit = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
-
-            model.Id = profileToEdit.Id;
-
-            ImageSetUp(model.Id, file);
-
-            _userProfileService.Update(model.ToUpdatingBllProfile());
-
-            FullProfileViewModel obj1 = _userProfileService.GetById(model.Id).ToFullMvcProfile();
-            return PartialView("_Profile", obj1);
-
-        }
-
-        [HttpPost]
-        public ActionResult Search(FullProfileViewModel model)
+        public ActionResult Search(SearchUserModel model)
         {
             if (ModelState.IsValid)
             {
                 var result = _userProfileService.Search(new BllUserProfile
-                    {
-                        NickName = model.NickName,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        City = model.City,
-                        Gender = model.Gender
-                    }).Select(x => x.ToFullMvcProfile()).ToList();
-
-                //.OrderByDescending(x => x.EqualityToSearchObject(model))
-                //.Where(x => x.EqualityToSearchObject(model) > 0);
+                {
+                    NickName = model.NickName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    City = model.City,
+                    Gender = model.Gender
+                }).Select(x => x.ToMvcProfile()).ToList();
 
                 ViewBag.Title = "Search Results";
                 ViewBag.EmptyMessage = "No results...";
-                return View("_ProfilesViewList",result);
+                return View("_ProfilesViewList", result);
             }
             return View(model);
         }
@@ -95,12 +84,36 @@ namespace PL.Controllers
         public ActionResult Search()
         {
             if (Request.IsAjaxRequest())
-            {
                 return PartialView();
-            }
             return View();
         }
 
+        #endregion
+
+        #region Edit
+
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            var user = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
+
+            return View(user.ToEditUserProfile());
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProfileEditModel model, HttpPostedFileBase file = null)
+        {
+            var profileToEdit = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
+            model.Id = profileToEdit.Id;
+            ImageSetUp(model.Id, file);
+            _userProfileService.Update(model.ToUpdatingBllProfile());
+            FullProfileViewModel updatedModel = _userProfileService.GetById(model.Id).ToFullMvcProfile();
+            return PartialView("_Profile", updatedModel);
+        }
+
+        #endregion
+
+        [HttpGet]
         public ActionResult ShowUser(int id)
         {
             var profile = _userProfileService.GetById(id).ToFullMvcProfile();
@@ -115,6 +128,8 @@ namespace PL.Controllers
 
             return View("_Profile", profile);
         }
+
+        #region Images
 
         public FileResult GetImage(int id)
         {
@@ -135,10 +150,10 @@ namespace PL.Controllers
             if (file != null)
             {
                 if (file.ContentType == "image/jpg" ||
-                  file.ContentType == "image/png" ||
-                  file.ContentType == "image/jpeg")
+                    file.ContentType == "image/png" ||
+                    file.ContentType == "image/jpeg")
                 {
-                    var photo = new BllPhoto()
+                    var photo = new BllPhoto
                     {
                         Id = profileId,
                         Date = DateTime.Now,
@@ -151,5 +166,7 @@ namespace PL.Controllers
                 }
             }
         }
+
+        #endregion
     }
 }

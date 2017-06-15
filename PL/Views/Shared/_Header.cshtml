@@ -1,16 +1,9 @@
 ﻿<nav class="navbar navbar-default navbar-fixed-top header">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="~/Home/">Home</a>
         </div>
-        <li class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-
 
             @if (User.Identity.IsAuthenticated)
             {
@@ -21,8 +14,21 @@
                         LoadingElementId = "loading",
                         OnBegin = "hideContent",
                         OnComplete = "unhideContent"
-                    }, new {@class = "glyphicon-search"})
+                    })
                 </li>
+                @*<li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button">@User.Identity.Name <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="divider"></li>
+                    <li>
+                        @Ajax.ActionLink("Edit Profile", "Edit" , "Profile",null, new AjaxOptions()
+                   {
+                       UpdateTargetId = "main_container"
+                   }, new {@class = "glyphicon glyphicon-edit" })
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("LogOff", "Account")"><i class="glyphicon glyphicon-log-out"></i>Exit</a></li>
+                    </ul>
+                </li>*@
                 <li>@Html.ActionLink("Logout", "LogOff", "Account")</li>
             }
             else
@@ -33,10 +39,6 @@
         </ul>
         </div>
 </nav>
-
-
-
-
 
 @*<nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">

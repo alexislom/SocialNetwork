@@ -28,11 +28,11 @@ namespace PL.Controllers
             _friendRequestService = friendRequestService;
         }
 
+        #region Registration, login and logoff methods
+
         [HttpGet]
         public ActionResult Login()
         {
-            if (Request.IsAjaxRequest())
-                return PartialView();
             return View();
         }
 
@@ -47,7 +47,7 @@ namespace PL.Controllers
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Invalid username or password");
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
             }
             return View(model);
         }
@@ -55,8 +55,6 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (Request.IsAjaxRequest())
-                return PartialView();
             return View();
         }
 
@@ -67,26 +65,41 @@ namespace PL.Controllers
         {
             if (_userService.GetOneByPredicate(u => u.UserName == viewModel.UserName) != null)
             {
-                ModelState.AddModelError("", "User with this name already registered.");
+                ModelState.AddModelError(string.Empty, "User with this name already registered.");
                 return View(viewModel);
             }
 
             if (_userService.GetOneByPredicate(u => u.Email == viewModel.UserEmail) != null)
             {
-                ModelState.AddModelError("", "User with this email already registered.");
+                ModelState.AddModelError(string.Empty, "User with this email already registered.");
                 return View(viewModel);
             }
 
             if (ModelState.IsValid)
             {
                 MembershipRegistration(viewModel);
-                if (User.IsInRole("Admin"))
-                    return RedirectToAction("GetAllUsers");
+                //if (User.IsInRole("Admin"))
+                //    return RedirectToAction("GetAllUsers");
                 FormsAuthentication.SetAuthCookie(viewModel.UserName, false);
                 return RedirectToAction("Index", "Profile");
             }
 
             return View(viewModel);
+        }
+
+        [ChildActionOnly]
+        public void MembershipRegistration(RegisterViewModel viewModel)
+        {
+            var membershipUser = ((CustomMembershipProvider)Membership.Provider)
+                .CreateUser(viewModel.UserEmail, viewModel.UserName, viewModel.UserPassword);
+            if (membershipUser != null)
+            {
+                var profile = _userProfileService.GetOneByPredicate(p => p.NickName == viewModel.UserName);
+                profile.FirstName = viewModel.FirstName;
+                profile.LastName = viewModel.LastName;
+                profile.Gender = viewModel.Gender;
+                _userProfileService.Update(profile);
+            }
         }
 
         public ActionResult LogOff()
@@ -95,6 +108,10 @@ namespace PL.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        #endregion
+
+        #region For admin only
+
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
         public ActionResult GetAllUsers()
@@ -102,26 +119,38 @@ namespace PL.Controllers
             var users = _userService.GetAllByPredicate(u => u.UserName != User.Identity.Name);
             var mvcUsers = users.Select(u => u.ToMvcUser()).ToList();
             var roles = _roleService.GetAllByPredicate(r => r.Name != "Admin").Select(r => r.ToMvcRole()).ToList();
-            var model = new UsersEditModel()
+            var model = new UsersEditModel
             {
                 Users = mvcUsers,
                 Roles = from role in roles
-                        select new SelectListItem
-                        {
-                            Text = role.Name,
-                            Value = role.Id.ToString(),
-                        }
+                    select new SelectListItem
+                    {
+                        Text = role.Name,
+                        Value = role.Id.ToString(),
+                    }
             };
             ViewBag.Title = "Users";
+
             if (Request.IsAjaxRequest())
                 return PartialView(model);
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult GetUsers()
+        {
+            var userProfiles = _userProfileService.GetAllByPredicate(p => p.NickName != User.Identity.Name)
+                .Select(p => p.ToMvcProfile()).ToList();
+
+            if (Request.IsAjaxRequest())
+                return PartialView("_MessageFilterProfilesViewList", userProfiles);
+            return View("_MessageFilterProfilesViewList", userProfiles);
+
+        }
+
         [Authorize(Roles = "Admin, Moderator")]
         public ActionResult ChangeRole(int id, string value)
         {
-
             var user = _userService.GetById(id);
             user.RoleId = _roleService.GetOneByPredicate(r => r.Id.ToString() == value).Id;
             _userService.Update(user);
@@ -147,29 +176,6 @@ namespace PL.Controllers
             return RedirectToAction("GetAllUsers");
         }
 
-        public ActionResult GetUsers()
-        {
-            var userprofiles = _userProfileService.GetAllByPredicate(p => p.NickName != User.Identity.Name)
-                                                                    .Select(p => p.ToMvcProfile()).ToList();
-            if (Request.IsAjaxRequest())
-                return PartialView("_MessageFilterProfilesViewList", userprofiles);
-            return View("_MessageFilterProfilesViewList", userprofiles);
-
-        }
-
-        [ChildActionOnly]
-        public void MembershipRegistration(RegisterViewModel viewModel)
-        {
-            var membershipUser = ((CustomMembershipProvider)Membership.Provider)
-                .CreateUser(viewModel.UserEmail, viewModel.UserName, viewModel.UserPassword);
-            if (membershipUser != null)
-            {
-                var profile = _userProfileService.GetOneByPredicate(p => p.NickName == viewModel.UserName);
-                profile.FirstName = viewModel.FirstName;
-                profile.LastName = viewModel.LastName;
-                profile.Gender = viewModel.Gender;
-                _userProfileService.Update(profile);
-            }
-        }
+        #endregion
     }
 }

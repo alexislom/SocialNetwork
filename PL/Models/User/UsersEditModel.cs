@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PL.Models.User
@@ -13,6 +10,7 @@ namespace PL.Models.User
             Users = new HashSet<UserViewModel>();
             Roles = new HashSet<SelectListItem>();
         }
+
         public IEnumerable<UserViewModel> Users { get; set; }
         public IEnumerable<SelectListItem> Roles { get; set; }
 

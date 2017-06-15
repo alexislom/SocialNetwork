@@ -26,12 +26,11 @@ namespace PL.Providers
             };
             var user = new BllUser
             {
-                Email = email,
                 UserName = name,
+                Email = email,
                 Password = password,
                 RoleId = RoleService.GetOneByPredicate(r => r.Name == "ActiveUser").Id,
                 UserProfile = profile
-
             };
             UserService.Create(user);
             var membershipUser = GetUser(name, false);

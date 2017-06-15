@@ -1,77 +1,79 @@
 ﻿@model PL.Models.Profile.FullProfileViewModel
 
-<div class="col-md-4 col-lg-4">
-    <div class="row">
-        <img src="@Url.Action("GetImage", "Profile", new { Id = Model.PhotoId })" class="img-rounded img-responsive" id="img_holder" />
-    </div>
-    <div class="row">
-        @if (Model.NickName != User.Identity.Name)
-        {
-            <button class="btn btn-default btn-block " id="newMessage" value="@Model.Id">
-                <span class="glyphicon glyphicon-envelope"></span> Write message
-            </button>
-            if (ViewBag.IsFriend != null)
+<div class="row" id="user-info">
+    <div class="col-md-4 col-lg-4">
+        <div class="row fade-in-anim">
+            <img src="@Url.Action("GetImage", "Profile", new { Id = Model.PhotoId })" class="img-rounded img-responsive" id="img_holder" />
+        </div>
+        <div class="row fade-in-anim">
+            @if (Model.NickName != User.Identity.Name)
             {
-                if (ViewBag.IsFriend)
+                <button class="btn btn-default btn-block " id="newMessage" value="@Model.Id">
+                    <span class="glyphicon glyphicon-envelope"></span> Write message
+                </button>
+                if (ViewBag.IsFriend != null)
                 {
-                    <button id="remove" type="button" class="btn btn-danger btn-block glyphicon-minus" value="@Model.Id">
-                        Delete from friends
-                    </button>
+                    if (ViewBag.IsFriend)
+                    {
+                        <button id="remove" type="button" class="btn btn-danger btn-block glyphicon-minus" value="@Model.Id">
+                            Delete from friends
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" id="add" class="btn btn-success btn-block glyphicon-plus" value="@Model.Id">
+                            Add to friends
+                        </button>
+                    }
                 }
                 else
                 {
-                    <button type="button" id="add" class="btn btn-success btn-block glyphicon-plus" value="@Model.Id">
-                        Add to friends
+                    <button id="remove" type="button" class="btn btn-warning btn-block fa fa-hourglass-half" value="@Model.Id">
+                        Waiting response
                     </button>
                 }
             }
-            else
-            {
-                <button id="remove" type="button" class="btn btn-warning btn-block fa fa-hourglass-half" value="@Model.Id">
-                    Waiting response
-                </button>
-            }
-        }
+        </div>
     </div>
-</div>
 
-<div class="col-md-7 col-lg-7">
-    @if (string.Format("{0} {1}", Model.FirstName, Model.LastName).Length > 18)
-    {
-        <h2>@Model.FirstName @Model.LastName</h2>
-    }
-    else
-    {
-        <h1>@Model.FirstName @Model.LastName</h1>
-    }
-    <hr class="cust-hr"/>
-    @if (Model.DateOfBirth != null)
-    {
-        <p>Birth Date: @Model.DateOfBirth.Value.ToString("d MMM yyyy") </p>
-    }
-    @if (Model.Gender != null)
-    {
-        if (Model.Gender == true)
+    <div class="col-md-7 col-lg-7 fade-in-anim">
+        @if (string.Format("{0} {1}", Model.FirstName, Model.LastName).Length > 18)
         {
-            <p>Gender: Male</p>
+            <h2>@Model.FirstName @Model.LastName</h2>
         }
         else
         {
-            <p>Gender: Female</p>
+            <h1>@Model.FirstName @Model.LastName</h1>
         }
-    }
-    @if (Model.City != null)
-    {
-        <p>City: @Model.City</p>
-    }
-    @if (Model.MobilePhoneNumber != null)
-    {
-        <p>Contact Phohe: @Model.MobilePhoneNumber</p>
-    }
-    @if (Model.Status != null)
-    {
-        <p>@Model.Status</p>
-    }
+        <hr class="cust-hr" />
+        @if (Model.DateOfBirth != null)
+        {
+            <p>Birth Date: @Model.DateOfBirth.Value.ToString("d MMM yyyy") </p>
+        }
+        @if (Model.Gender != null)
+        {
+            if (Model.Gender == true)
+            {
+                <p>Gender: Male</p>
+            }
+            else
+            {
+                <p>Gender: Female</p>
+            }
+        }
+        @if (Model.City != null)
+        {
+            <p>City: @Model.City</p>
+        }
+        @if (Model.MobilePhoneNumber != null)
+        {
+            <p>Contact Phohe: @Model.MobilePhoneNumber</p>
+        }
+        @if (Model.Status != null)
+        {
+            <p>@Model.Status</p>
+        }
+        @Html.Action("Edit", "Profile")
+    </div>
 </div>
-    
 

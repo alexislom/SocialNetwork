@@ -1,9 +1,5 @@
 ﻿using BLL.Interface.Entities;
 using PL.Models.Profile;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PL.Infrastructure.Mappers
 {
@@ -11,7 +7,10 @@ namespace PL.Infrastructure.Mappers
     {
         public static BllUserProfile ToBllProfile(this ProfileViewModel model)
         {
-            return new BllUserProfile()
+            if (model == null)
+                return null;
+
+            return new BllUserProfile
             {
                 DateOfBirth = model.DateOfBirth,
                 Id = model.Id,
@@ -24,6 +23,9 @@ namespace PL.Infrastructure.Mappers
 
         public static ProfileViewModel ToMvcProfile(this BllUserProfile profile)
         {
+            if (profile == null)
+                return null;
+
             return new ProfileViewModel()
             {
                 DateOfBirth = profile.DateOfBirth,
@@ -39,6 +41,9 @@ namespace PL.Infrastructure.Mappers
 
         public static DialogProfile ToDialogProfile(this BllUserProfile profile)
         {
+            if (profile == null)
+                return null;
+
             return new DialogProfile()
             {
                 Id = profile.Id,
@@ -48,6 +53,9 @@ namespace PL.Infrastructure.Mappers
         }
         public static FullProfileViewModel ToFullMvcProfile(this BllUserProfile profile)
         {
+            if (profile == null)
+                return null;
+
             return new FullProfileViewModel()
             {
                 DateOfBirth = profile.DateOfBirth,
@@ -65,6 +73,9 @@ namespace PL.Infrastructure.Mappers
 
         public static BllUserProfile ToUpdatingBllProfile(this ProfileEditModel model)
         {
+            if (model == null)
+                return null;
+
             return new BllUserProfile()
             {
                 Id = model.Id,
@@ -79,6 +90,9 @@ namespace PL.Infrastructure.Mappers
 
         public static ProfileEditModel ToEditUserProfile(this BllUserProfile model)
         {
+            if (model == null)
+                return null;
+
             return new ProfileEditModel()
             {
                 Id = model.Id,
@@ -90,19 +104,5 @@ namespace PL.Infrastructure.Mappers
                 MobilePhoneNumber = model.MobilePhoneNumber
             };
         }
-
-        //public static SearchUserModel ToSearchUserProfile(this BllUserProfile profile)
-        //{
-        //    return new SearchUserModel()
-        //    {
-        //        Id = profile.Id,
-        //        FirstName = profile.FirstName,
-        //        LastName = profile.LastName,
-        //        NickName = profile.NickName,
-        //        Gender = profile.Gender,
-        //        City = profile.City,
-        //        //EqualsCoeff = 0
-        //    };
-        //}
     }
 }

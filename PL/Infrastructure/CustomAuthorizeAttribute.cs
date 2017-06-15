@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace PL.Infrastructure
 {
@@ -16,7 +12,6 @@ namespace PL.Infrastructure
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                     filterContext.Result = new PartialViewResult { ViewName = "BannedUserPage" };
                 else filterContext.Result = new ViewResult { ViewName = "BannedUserPage" };
-
             }
         }
     }

@@ -7,12 +7,7 @@ using DAL.Repositories;
 using Ninject;
 using Ninject.Web.Common;
 using ORM.EF;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DependencyResolver
 {

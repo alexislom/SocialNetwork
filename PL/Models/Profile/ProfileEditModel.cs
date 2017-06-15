@@ -30,6 +30,5 @@ namespace PL.Models.Profile
 
         [DataType(DataType.MultilineText)]
         public string Status { get; set; }
-
     }
 }

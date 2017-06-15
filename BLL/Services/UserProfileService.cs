@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BLL.Helpers;
 using BLL.Mappers;
 
 namespace BLL.Services
@@ -77,30 +78,37 @@ namespace BLL.Services
 
         public IEnumerable<BllUserProfile> Search(BllUserProfile profile)
         {
-            var result = _userProfileRepository.GetAll();
-            if (!string.IsNullOrEmpty(profile.FirstName))
-                result = result.Where(c => (c.FirstName.ToLower()).Contains(profile.FirstName.ToLower()));
-            if (!string.IsNullOrEmpty(profile.LastName))
-                result = result.Where(c => (c.LastName.ToLower()).Contains(profile.LastName.ToLower()));
-            if (!string.IsNullOrEmpty(profile.City))
-                result = result.Where(c => (c.City.ToLower()).Contains(profile.City.ToLower()));
+            var resultSet = new HashSet<BllUserProfile>(new BllUserProfileComparer());
+            SearchByStringParameter(profile.NickName, ref resultSet, p => (p.NickName.ToLower()).Contains(profile.NickName.ToLower()));
+            SearchByStringParameter(profile.FirstName, ref resultSet, p => (p.FirstName.ToLower()).Contains(profile.FirstName.ToLower()));
+            SearchByStringParameter(profile.LastName, ref resultSet, p => (p.LastName.ToLower()).Contains(profile.LastName.ToLower()));
+            SearchByStringParameter(profile.City, ref resultSet, p => p.City.Contains(profile.City));
+            var result = resultSet.Where(p => p.Gender == profile.Gender).Select(p => p).ToList();
+            return result;
 
-            return result.Select(x => x.ToBllUserProfile());
+            //var result = _userProfileRepository.GetAll();
+            //if (!string.IsNullOrEmpty(profile.FirstName))
+            //    result = result.Where(c => (c.FirstName.ToLower()).Contains(profile.FirstName.ToLower()));
+            //if (!string.IsNullOrEmpty(profile.LastName))
+            //    result = result.Where(c => (c.LastName.ToLower()).Contains(profile.LastName.ToLower()));
+            //if (!string.IsNullOrEmpty(profile.City))
+            //    result = result.Where(c => (c.City.ToLower()).Contains(profile.City.ToLower()));
+
+            //return result.Select(x => x.ToBllUserProfile());
         }
 
-        private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection,
-            Expression<Func<DalUserProfile, bool>> predicates)
+        private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection, Expression<Func<DalUserProfile, bool>> predicates)
         {
-            //if (parameter != null)
-            //{
-            //    var dalProfileList = profileRepository.GetAllByPredicate(predicates).ToList();
-            //    var bllProfileList = dalProfileList.Select(p => p.ToBllProfile()).ToList();
-            //    if (collection.Count == 0)
-            //        foreach (var item in bllProfileList)
-            //            collection.Add(item);
-            //    else
-            //        collection.IntersectWith(bllProfileList);
-            //}
+            if (parameter != null)
+            {
+                var dalProfileList = _userProfileRepository.GetAllByPredicate(predicates).ToList();
+                var bllProfileList = dalProfileList.Select(p => p.ToBllUserProfile()).ToList();
+                if (collection.Count == 0)
+                    foreach (var item in bllProfileList)
+                        collection.Add(item);
+                else
+                    collection.IntersectWith(bllProfileList);
+            }
         }
 
         #endregion

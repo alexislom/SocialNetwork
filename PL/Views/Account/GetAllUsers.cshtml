@@ -1,7 +1,7 @@
 ﻿@model PL.Models.User.UsersEditModel
+
 @using (Html.BeginForm("Register", "Account", FormMethod.Get))
 {   <div class="row">
-
         <div class="col-xs-12">
             <h2>Manage users</h2>
             <button type="submit" class="btn bg-warning user_edit_buttons">Create user</button>
@@ -9,9 +9,10 @@
     </div>
     <hr />
 }
+
 @if (Model.Users.Count() == 0)
 {
-    <b>Social Network "InTouch" is dead... There are nobody except you</b>
+    <b>Social Network is dead... There are nobody except you</b>
 }
 else
 {
@@ -24,7 +25,7 @@ else
                     @Html.ActionLink(item.UserName, "ShowUser", "Profile", new { id = item.Id })
                 </div>
                 <div class="col-xs-6">
-                    @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector" })
+                    @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector col-xs-6" })
                     @Html.Hidden("value", Model.NewRole, new { @class = "role_value", @value = "ActiveUser" })
                     @Html.Hidden("id", item.Id, new { @class = "id" })
                 </div>

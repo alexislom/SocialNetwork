@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace PL.Controllers
 {
@@ -46,7 +47,7 @@ namespace PL.Controllers
         #region Search
 
         [HttpPost]
-        public ActionResult Search(SearchUserModel model)
+        public ActionResult Search(SearchUserModel model, int? page)
         {
             if (ModelState.IsValid)
             {
@@ -59,9 +60,12 @@ namespace PL.Controllers
                     Gender = model.Gender
                 }).Select(x => x.ToMvcProfile()).ToList();
 
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+
                 ViewBag.Title = "Search Results";
                 ViewBag.EmptyMessage = "No results...";
-                return View("_ProfilesViewList", result);
+                return View("_ProfilesViewList", result.ToPagedList(pageNumber, pageSize));
             }
             return View(model);
         }

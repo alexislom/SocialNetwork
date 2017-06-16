@@ -6,8 +6,6 @@ using PagedList;
 using PL.Infrastructure;
 using PL.Infrastructure.Mappers;
 using PL.Models.Profile;
-using PagedList.Mvc;
-using PagedList;
 
 namespace PL.Controllers
 {
@@ -43,18 +41,34 @@ namespace PL.Controllers
                 profileList.Add(_userProfileService.GetById(friendId).ToMvcProfile());
             }
 
-            int pageSize = 4;
             int pageNumber = (page ?? 1);
 
             ViewBag.Title = "Friends";
             ViewBag.EmptyMessage = "You don't have friends...Use search to find them!!!";
 
             if (Request.IsAjaxRequest())
-                return PartialView("_ProfilesViewList", profileList.ToPagedList(pageNumber,pageSize));
+                return PartialView("_ProfilesViewList", profileList.ToPagedList(pageNumber,Constants.PAGESIZE));
 
-            return View("_ProfilesViewList", profileList.ToPagedList(pageNumber, pageSize));
+            return View("_ProfilesViewList", profileList.ToPagedList(pageNumber, Constants.PAGESIZE));
         }
 
+        public ActionResult FriendRequests(int? page)
+        {
+            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
+
+            var requests = _friendRequestService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
+
+            var requestsModelList = new List<ProfileViewModel>();
+
+            foreach (var item in requests)
+                requestsModelList.Add(_userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
+
+            int pageNumber = (page ?? 1);
+
+            if (Request.IsAjaxRequest())
+                return PartialView("_RequestsList", requestsModelList.ToPagedList(pageNumber, Constants.PAGESIZE));
+            return View("_RequestsList", requestsModelList.ToPagedList(pageNumber, Constants.PAGESIZE));
+        }
 
         public ActionResult AddToFriend(int id)
         {
@@ -98,21 +112,6 @@ namespace PL.Controllers
             ViewBag.IsFriend = false;
 
             return RedirectToAction("ShowUser", "Profile", new { id = id });
-        }
-
-        public ActionResult FriendRequests()
-        {
-            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
-
-            var requests = _friendRequestService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
-
-            var requestsModelList = new List<ProfileViewModel>();
-
-            foreach (var item in requests)
-                requestsModelList.Add(_userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
-            if (Request.IsAjaxRequest())
-                return PartialView("_RequestsList", requestsModelList);
-            return View("_RequestsList", requestsModelList);
         }
 
         #endregion

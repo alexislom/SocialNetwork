@@ -5,7 +5,7 @@ using System.Data.Entity;
 
 namespace ORM.EF
 {
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<SocialNetworkContext>
+    public class DatabaseInitializer : CreateDatabaseIfNotExists<SocialNetworkContext>
     {
         protected override void Seed(SocialNetworkContext context)
         {

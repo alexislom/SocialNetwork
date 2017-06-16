@@ -82,10 +82,12 @@ namespace BLL.Services
 
         public void AddFriend(int userId, int otherUserId)
         {
-            var requestsСoincidence = _friendRequestRepository
-                .GetAllByPredicate(f => ((f.UserFromId == userId && f.UserToId == otherUserId)
-                                         || (f.UserToId == userId && f.UserFromId == otherUserId))).ToList();
-            if (requestsСoincidence.Count() != 0) return;
+            var requestsСoincidence = _friendRequestRepository.GetAllByPredicate(f =>
+                                            ((f.UserFromId == userId && f.UserToId == otherUserId)
+                                            || (f.UserToId == userId && f.UserFromId == otherUserId))).ToList();
+
+            if (requestsСoincidence.Count() != 0)
+                return;
             var friendRequest = new BllFriendRequest
             {
                 UserFromId = userId,

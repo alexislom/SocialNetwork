@@ -22,7 +22,7 @@ else
         {
             <div class="row">
                 <div class="col-xs-6">
-                    @Html.ActionLink(item.UserName,"ShowUser","Profile",new{id = item.Id},new {})
+                    @Html.ActionLink(item.UserName,"ShowUser","Profile",new{id = item.Id}, new {})
                 </div>
                 <div class="col-xs-6">
                     @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector col-xs-6" })

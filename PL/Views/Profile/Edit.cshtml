@@ -4,7 +4,7 @@
 }
 
 <div id="user-info">
-    @using (Ajax.BeginForm("Edit", "Profile", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "user-info"}, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("Edit", "Profile", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "user-info" }, new { id="edit-form",@class = "form-horizontal", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -60,37 +60,28 @@
         <div class="form-group">
             @Html.Label("Choose Image", new { @class = "control-label col-md-3" })
             <div class="col-md-6">
-                <input id="fileInput"  name="file" type="file" />
-                @*<input type="file" name="file" accept=".jpg, .png, .gif" class="btn btn-default btn-block"/>*@
+                <input type="file" name="file" accept=".jpg, .png, .gif" class="btn btn-default btn-block"/>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-6 col-md-3">
-                <button type="submit" class="btn btn-default btn-block btn-success" @*onclick="document.getElementById('close-btn').click()"*@>Save changes</button>
+                <button type="submit" id="submitEditForm" class="btn btn-default btn-block btn-success" @*onclick="document.getElementById('close-btn').click()"*@>Save changes</button>
             </div>
         </div>
     }
 </div>
 <script type="text/javascript">
-
-    $("#btnFileUpload").click(function() {
-        var formData = new FormData();
-        var file = document.getElementById("fileInput").files[0];
-        formData.append("fileInput", file);
-
+    $('#submitEditForm').on('click', function (e) {
+        var t = new FormData($('#edit-form').get(0));
         $.ajax({
-            url: "Home/AddImage",
             type: "POST",
-            data: formData,
+            url: '@Url.Action("Edit", "Profile")',
             contentType: false,
             processData: false,
-            success: function() {
-                alert("URA");
-            }
+            data: t
         });
     });
-        
 </script>
  
 

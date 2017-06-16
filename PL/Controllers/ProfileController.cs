@@ -39,21 +39,7 @@ namespace PL.Controllers
                 return View("_Profile", model);
             }
             return RedirectToAction("Login", "Account");
-            //return View();
         }
-
-        //public ActionResult Page()
-        //{
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        var profile = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
-        //        var model = profile.ToFullMvcProfile();
-        //        if (Request.IsAjaxRequest())
-        //            return PartialView("_Profile", model);
-        //        return View("_Profile", model);
-        //    }
-        //    return RedirectToAction("Login", "Account");
-        //}
 
         #endregion
 

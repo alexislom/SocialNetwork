@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Security;
 
 namespace PL.Providers
@@ -28,7 +29,7 @@ namespace PL.Providers
             {
                 UserName = name,
                 Email = email,
-                Password = password,
+                Password = password,//Crypto.HashPassword(password),
                 RoleId = RoleService.GetOneByPredicate(r => r.Name == "ActiveUser").Id,
                 UserProfile = profile
             };
@@ -41,7 +42,7 @@ namespace PL.Providers
         {
             var user = UserService.GetOneByPredicate(u => u.UserName == name);
 
-            return user != null && user.Password == password;
+            return user != null && user.Password == password; //Crypto.VerifyHashedPassword(user.Password, password)
         }
 
         public override MembershipUser GetUser(string name, bool userIsOnline)

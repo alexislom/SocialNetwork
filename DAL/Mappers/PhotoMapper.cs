@@ -1,10 +1,5 @@
 ﻿using DAL.Interfaces.DTO;
 using ORM.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Mappers
 {
@@ -12,7 +7,10 @@ namespace DAL.Mappers
     {
         public static Photo ToOrmPhoto(this DalPhoto dalPhoto)
         {
-            var ormPhoto = new Photo()
+            if (dalPhoto == null)
+                return null;
+
+            return new Photo()
             {
                 Id = dalPhoto.Id,
                 Data = dalPhoto.Data,
@@ -20,10 +18,12 @@ namespace DAL.Mappers
                 MimeType = dalPhoto.MimeType,
 
             };
-            return ormPhoto;
         }
         public static DalPhoto ToDalPhoto(this Photo ormPhoto)
         {
+            if (ormPhoto == null)
+                return null;
+
             return new DalPhoto()
             {
                 Id = ormPhoto.Id,

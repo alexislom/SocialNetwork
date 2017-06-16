@@ -1,10 +1,5 @@
 ﻿using DAL.Interfaces.DTO;
 using ORM.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Mappers
 {
@@ -14,7 +9,8 @@ namespace DAL.Mappers
         {
             if (dalProfile == null)
                 return null;
-            return new UserProfile()
+
+            return new UserProfile
             {
                 Id = dalProfile.Id,
                 FirstName = dalProfile.FirstName,
@@ -34,7 +30,8 @@ namespace DAL.Mappers
         {
             if (ormProfile == null)
                 return null;
-            return new DalUserProfile()
+
+            return new DalUserProfile
             {
                 Id = ormProfile.Id,
                 FirstName = ormProfile.FirstName,

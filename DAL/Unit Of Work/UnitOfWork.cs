@@ -17,6 +17,8 @@ namespace DAL
             Context = context;
         }
 
+        #region Transaction
+
         public void Commit()
         {
             try
@@ -39,6 +41,8 @@ namespace DAL
             }
         }
 
+        #endregion
+
         public void Dispose()
         {
             Dispose(true);
@@ -59,6 +63,7 @@ namespace DAL
             }
             _isDisposed = true;
         }
+
         ~UnitOfWork()
         {
             Dispose(true);

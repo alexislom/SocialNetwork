@@ -1,5 +1,4 @@
-﻿using DAL.Interfaces;
-using System;
+﻿using System;
 
 namespace DAL.Interfaces.DTO
 {

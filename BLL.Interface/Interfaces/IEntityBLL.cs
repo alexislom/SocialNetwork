@@ -1,4 +1,5 @@
-﻿namespace BLL.Interface.Interfaces
+﻿
+namespace BLL.Interface.Interfaces
 {
     public interface IEntityBLL
     {

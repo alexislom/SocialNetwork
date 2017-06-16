@@ -8,22 +8,25 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
-        private readonly DbContext unitOfWork;
+        private readonly DbContext _unitOfWork;
 
         public RoleRepository(DbContext unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
-        public void Create(DalRole e)
+
+        #region CRUD operations
+
+        public void Create(DalRole e) => _unitOfWork.Set<Role>().Add(e.ToOrmRole());
+
+        public void Update(DalRole e)
         {
-            unitOfWork.Set<Role>().Add(e.ToOrmRole());
+            throw new NotImplementedException();
         }
 
         public void Delete(DalRole e)
@@ -31,21 +34,18 @@ namespace DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(DalRole e)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
+
+        #region Get roles
 
         public IEnumerable<DalRole> GetAll()
         {
-            var roles = unitOfWork.Set<Role>().ToList();
+            var roles = _unitOfWork.Set<Role>().ToList();
             return roles.Select(r => r.ToDalRole()).ToList();
         }
 
-        public DalRole GetById(int key)
-        {
-            return unitOfWork.Set<Role>().Where(r => r.Id == key).FirstOrDefault().ToDalRole();
-        }
+        public DalRole GetById(int key) => 
+            _unitOfWork.Set<Role>().Where(r => r.Id == key).FirstOrDefault().ToDalRole();
 
         public DalRole GetOneByPredicate(Expression<Func<DalRole, bool>> predicate)
         {
@@ -57,8 +57,10 @@ namespace DAL.Repositories
             var visitor = new PredicateExpressionVisitor<DalRole, Role>
                 (Expression.Parameter(typeof(Role), predicate.Parameters[0].Name));
             var express = Expression.Lambda<Func<Role, bool>>(visitor.Visit(predicate.Body), visitor.NewParameter);
-            var final = unitOfWork.Set<Role>().Where(express).ToList();
+            var final = _unitOfWork.Set<Role>().Where(express).ToList();
             return final.Select(r => r.ToDalRole());
         }
+
+        #endregion
     }
 }

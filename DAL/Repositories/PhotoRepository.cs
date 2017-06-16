@@ -8,52 +8,57 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
     public class PhotoRepository : IPhotoRepository
     {
-        private readonly DbContext unitOfWork;
+        private readonly DbContext _unitOfWork;
 
         public PhotoRepository(DbContext unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
+
+        #region CRUD operations
+
         public void Create(DalPhoto e)
         {
-            unitOfWork.Set<Photo>().Add(e.ToOrmPhoto());
+            _unitOfWork.Set<Photo>().Add(e.ToOrmPhoto());
+        }
+
+        public void Update(DalPhoto e)
+        {
+            var photo = _unitOfWork.Set<Photo>().First(x => x.Id == e.Id);
+            _unitOfWork.Set<Photo>().Attach(photo);
+            photo.Data = e.Data;
+            photo.MimeType = e.MimeType;
+            photo.Date = e.Date;
+            _unitOfWork.Entry(photo).State = EntityState.Modified;
         }
 
         public void Delete(DalPhoto e)
         {
-            var userPhoto = unitOfWork.Set<Photo>().FirstOrDefault(p => p.Id == e.Id);
-            unitOfWork.Set<Photo>().Attach(userPhoto);
-            unitOfWork.Set<Photo>().Remove(userPhoto);
-            unitOfWork.Entry(userPhoto).State = System.Data.Entity.EntityState.Deleted;
+            var userPhoto = _unitOfWork.Set<Photo>().FirstOrDefault(p => p.Id == e.Id);
+            _unitOfWork.Set<Photo>().Attach(userPhoto);
+            _unitOfWork.Set<Photo>().Remove(userPhoto);
+            _unitOfWork.Entry(userPhoto).State = EntityState.Deleted;
         }
+
+        #endregion
+
+        #region Get photos
 
         public IEnumerable<DalPhoto> GetAll()
         {
-            var photos = unitOfWork.Set<Photo>().Select(u => u).ToList();
+            var photos = _unitOfWork.Set<Photo>().Select(u => u).ToList();
             return photos.Select(p => p.ToDalPhoto()).ToList();
-        }
-
-        public IEnumerable<DalPhoto> GetAllByPredicate(Expression<Func<DalPhoto, bool>> predicate)
-        {
-            var visitor = new PredicateExpressionVisitor<DalPhoto, Photo>(Expression.Parameter(typeof(Photo), predicate.Parameters[0].Name));
-            var express = Expression.Lambda<Func<Photo, bool>>(visitor.Visit(predicate.Body), visitor.NewParameter);
-            var final = unitOfWork.Set<Photo>().Where(express).ToList();
-            return final.Select(p => p.ToDalPhoto()).ToList();
         }
 
         public DalPhoto GetById(int key)
         {
-            var photo = unitOfWork.Set<Photo>().Find(key);
-            if (photo == null)
-                return null;
-            return photo.ToDalPhoto();
+            var photo = _unitOfWork.Set<Photo>().Find(key);
+            return photo == null ? null : photo.ToDalPhoto();
         }
 
         public DalPhoto GetOneByPredicate(Expression<Func<DalPhoto, bool>> predicate)
@@ -62,14 +67,14 @@ namespace DAL.Repositories
             return photo;
         }
 
-        public void Update(DalPhoto e)
+        public IEnumerable<DalPhoto> GetAllByPredicate(Expression<Func<DalPhoto, bool>> predicate)
         {
-            var photo = unitOfWork.Set<Photo>().First(x => x.Id == e.Id);
-            unitOfWork.Set<Photo>().Attach(photo);
-            photo.Data = e.Data;
-            photo.MimeType = e.MimeType;
-            photo.Date = e.Date;
-            unitOfWork.Entry(photo).State = EntityState.Modified;
+            var visitor = new PredicateExpressionVisitor<DalPhoto, Photo>(Expression.Parameter(typeof(Photo), predicate.Parameters[0].Name));
+            var express = Expression.Lambda<Func<Photo, bool>>(visitor.Visit(predicate.Body), visitor.NewParameter);
+            var final = _unitOfWork.Set<Photo>().Where(express).ToList();
+            return final.Select(p => p.ToDalPhoto()).ToList();
         }
+
+        #endregion
     }
 }

@@ -1,10 +1,5 @@
 ﻿using DAL.Interfaces.DTO;
 using ORM.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Mappers
 {
@@ -14,24 +9,24 @@ namespace DAL.Mappers
         {
             if (ormRole == null)
                 return null;
-            var dalRole = new DalRole()
+
+            return new DalRole
             {
                 Id = ormRole.Id,
                 Name = ormRole.Name
             };
-            return dalRole;
         }
 
         public static Role ToOrmRole(this DalRole dalRole)
         {
             if (dalRole == null)
                 return null;
-            var ormRole = new Role()
+
+            return new Role
             {
                 Id = dalRole.Id,
                 Name = dalRole.Name
             };
-            return ormRole;
         }
     }
 }

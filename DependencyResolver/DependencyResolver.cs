@@ -53,7 +53,6 @@ namespace DependencyResolver
 
             kernel.Bind<IPhotoService>().To<PhotoService>();
             kernel.Bind<IPhotoRepository>().To<PhotoRepository>();
-
         }
     }
 }

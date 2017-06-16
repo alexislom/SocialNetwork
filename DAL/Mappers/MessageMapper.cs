@@ -1,10 +1,5 @@
 ﻿using DAL.Interfaces.DTO;
 using ORM.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Mappers
 {
@@ -14,7 +9,8 @@ namespace DAL.Mappers
         {
             if (dalMessage == null)
                 return null;
-            var ormMessage = new Message()
+
+            return new Message
             {
                 Id = dalMessage.Id,
                 Date = dalMessage.Date,
@@ -22,13 +18,13 @@ namespace DAL.Mappers
                 FromUserId = dalMessage.FromUserId,
                 ToUserId = dalMessage.ToUserId
             };
-            return ormMessage;
         }
         public static DalMessage ToDalMessage(this Message ormMessage)
         {
             if (ormMessage == null)
                 return null;
-            var dalMessage = new DalMessage()
+
+            return new DalMessage()
             {
                 Id = ormMessage.Id,
                 Date = ormMessage.Date,
@@ -38,7 +34,6 @@ namespace DAL.Mappers
                 FromUser = ormMessage.FromUser.ToDalUserProfile(),
                 ToUser = ormMessage.ToUser.ToDalUserProfile()
             };
-            return dalMessage;
         }
     }
 }

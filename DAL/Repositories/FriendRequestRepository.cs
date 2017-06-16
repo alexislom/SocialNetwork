@@ -14,15 +14,24 @@ namespace DAL.Repositories
 {
     public class FriendRequestRepository : IFriendRequestRepository
     {
-        private readonly DbContext unitOfWorkContext;
+        private readonly DbContext _unitOfWork;
 
-        public FriendRequestRepository(DbContext unitOfWorkContext)
+        public FriendRequestRepository(DbContext unitOfWork)
         {
-            this.unitOfWorkContext = unitOfWorkContext;
+            _unitOfWork = unitOfWork;
         }
-        public void Create(DalFriendRequest e)
+
+        #region CRUD operations
+
+        public void Create(DalFriendRequest e) => 
+            _unitOfWork.Set<FriendRequest>().Add(e.ToOrmFriendRequest());
+
+        public void Update(DalFriendRequest e)
         {
-            unitOfWorkContext.Set<FriendRequest>().Add(e.ToOrmFriendRequest());
+            if (e != null)
+            {
+                _unitOfWork.Set<FriendRequest>().AddOrUpdate(e.ToOrmFriendRequest());
+            }
         }
 
         public void Delete(DalFriendRequest e)
@@ -30,33 +39,26 @@ namespace DAL.Repositories
             if (e != null)
             {
                 var ormFriendRequest = e.ToOrmFriendRequest();
-                var friendship = unitOfWorkContext.Set<FriendRequest>().FirstOrDefault(f => f.Id == ormFriendRequest.Id);
-                unitOfWorkContext.Set<FriendRequest>().Attach(friendship);
-                unitOfWorkContext.Set<FriendRequest>().Remove(friendship);
-                unitOfWorkContext.Entry(friendship).State = EntityState.Deleted;
+                var friendship = _unitOfWork.Set<FriendRequest>().FirstOrDefault(f => f.Id == ormFriendRequest.Id);
+                _unitOfWork.Set<FriendRequest>().Attach(friendship);
+                _unitOfWork.Set<FriendRequest>().Remove(friendship);
+                _unitOfWork.Entry(friendship).State = EntityState.Deleted;
             }
         }
 
+        #endregion
+
+        #region Get requests
+
         public IEnumerable<DalFriendRequest> GetAll()
         {
-            return unitOfWorkContext.Set<FriendRequest>().Select(m => m.ToDalFriendRequest());
-        }
-
-        public IEnumerable<DalFriendRequest> GetAllByPredicate(Expression<Func<DalFriendRequest, bool>> predicate)
-        {
-            var visitor = new PredicateExpressionVisitor<DalFriendRequest, FriendRequest>
-                (Expression.Parameter(typeof(FriendRequest), predicate.Parameters[0].Name));
-            var express = Expression.Lambda<Func<FriendRequest, bool>>(visitor.Visit(predicate.Body), visitor.NewParameter);
-            var final = unitOfWorkContext.Set<FriendRequest>().Where(express).ToList();
-            return final.Select(f => f.ToDalFriendRequest());
+            return _unitOfWork.Set<FriendRequest>().Select(m => m.ToDalFriendRequest());
         }
 
         public DalFriendRequest GetById(int key)
         {
-            var friendship = unitOfWorkContext.Set<FriendRequest>().Find(key);
-            if (friendship == null)
-                return null;
-            return friendship.ToDalFriendRequest();
+            var friendship = _unitOfWork.Set<FriendRequest>().Find(key);
+            return friendship == null ? null : friendship.ToDalFriendRequest();
         }
 
         public DalFriendRequest GetOneByPredicate(Expression<Func<DalFriendRequest, bool>> predicate)
@@ -64,25 +66,27 @@ namespace DAL.Repositories
             return GetAllByPredicate(predicate).FirstOrDefault();
         }
 
-        public void Update(DalFriendRequest e)
+        public IEnumerable<DalFriendRequest> GetAllByPredicate(Expression<Func<DalFriendRequest, bool>> predicate)
         {
-            if (e != null)
-            {
-                unitOfWorkContext.Set<FriendRequest>().AddOrUpdate(e.ToOrmFriendRequest());
-            }
-
+            var visitor = new PredicateExpressionVisitor<DalFriendRequest, FriendRequest>
+                (Expression.Parameter(typeof(FriendRequest), predicate.Parameters[0].Name));
+            var express = Expression.Lambda<Func<FriendRequest, bool>>(visitor.Visit(predicate.Body), visitor.NewParameter);
+            var final = _unitOfWork.Set<FriendRequest>().Where(express).ToList();
+            return final.Select(f => f.ToDalFriendRequest());
         }
+
+        #endregion
 
         public void DeleteAllUserRelationById(int id)
         {
-            var friendships = unitOfWorkContext.Set<FriendRequest>()
-                                        .Where(f => f.UserFromId == id || f.UserToId == id);
+            var friendships = _unitOfWork.Set<FriendRequest>()
+                .Where(f => f.UserFromId == id || f.UserToId == id);
 
             foreach (var item in friendships)
             {
-                unitOfWorkContext.Set<FriendRequest>().Attach(item);
-                unitOfWorkContext.Set<FriendRequest>().Remove(item);
-                unitOfWorkContext.Entry(item).State = EntityState.Deleted;
+                _unitOfWork.Set<FriendRequest>().Attach(item);
+                _unitOfWork.Set<FriendRequest>().Remove(item);
+                _unitOfWork.Entry(item).State = EntityState.Deleted;
             }
         }
     }

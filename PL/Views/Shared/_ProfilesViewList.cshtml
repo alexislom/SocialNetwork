@@ -1,12 +1,17 @@
-﻿@model IEnumerable<PL.Models.Profile.ProfileViewModel>
+﻿@model PagedList.IPagedList<PL.Models.Profile.ProfileViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 <div class="row">
     <h2>@ViewBag.Title</h2>
     <hr />
 </div>
+
 @if (Model.Count() == 0)
 {
     <h3><b>@ViewBag.EmptyMessage</b></h3>
 }
+
 @foreach (var profile in Model)
 {
     <div class="row text-center">
@@ -23,3 +28,7 @@
         </div>
     </div>
 }
+
+<h3>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</h3>
+
+@Html.PagedListPager(Model, page => Url.Action("Friends","Friend",new { page }) ) 

@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Web.Mvc;
 using BLL.Interface.Interfaces;
+using PagedList;
 using PL.Infrastructure;
 using PL.Infrastructure.Mappers;
 using PL.Models.Profile;
+using PagedList.Mvc;
+using PagedList;
 
 namespace PL.Controllers
 {
@@ -22,35 +25,9 @@ namespace PL.Controllers
             _userProfileService = userProfileService;
         }
 
-        public ActionResult AddToFriend(int id)
-        {
-            var userId = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name).Id;
+        #region Friendship
 
-            if (!(_friendRequestService.IsFriend(userId, id) || _friendRequestService.IsRequested(userId, id)))
-            {
-                _friendRequestService.AddFriend(userId, id);
-            }
-
-            ViewBag.IsFriend = true;
-
-            return RedirectToAction("ShowUser", "Profile", new { id = id });
-        }
-        public ActionResult FriendRequests()
-        {
-            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
-
-            var requests = _friendRequestService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
-
-            var requestsModelList = new List<ProfileViewModel>();
-
-            foreach (var item in requests)
-                requestsModelList.Add(_userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
-            if (Request.IsAjaxRequest())
-                return PartialView("_RequestsList", requestsModelList);
-            return View("_RequestsList", requestsModelList);
-        }
-
-        public ActionResult Friends()
+        public ActionResult Friends(int? page)
         {
             var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
 
@@ -65,13 +42,32 @@ namespace PL.Controllers
                 var friendId = (int)(item.UserFromId == curUserId ? item.UserToId : item.UserFromId);
                 profileList.Add(_userProfileService.GetById(friendId).ToMvcProfile());
             }
+
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+
             ViewBag.Title = "Friends";
             ViewBag.EmptyMessage = "You don't have friends...Use search to find them!!!";
 
             if (Request.IsAjaxRequest())
-                return PartialView("_ProfilesViewList", profileList);
+                return PartialView("_ProfilesViewList", profileList.ToPagedList(pageNumber,pageSize));
 
-            return View("_ProfilesViewList", profileList);
+            return View("_ProfilesViewList", profileList.ToPagedList(pageNumber, pageSize));
+        }
+
+
+        public ActionResult AddToFriend(int id)
+        {
+            var userId = _userService.GetOneByPredicate(u => u.UserName == User.Identity.Name).Id;
+
+            if (!(_friendRequestService.IsFriend(userId, id) || _friendRequestService.IsRequested(userId, id)))
+            {
+                _friendRequestService.AddFriend(userId, id);
+            }
+
+            ViewBag.IsFriend = true;
+
+            return RedirectToAction("ShowUser", "Profile", new { id = id });
         }
 
         public ActionResult ConfirmFriend(string username)
@@ -103,5 +99,22 @@ namespace PL.Controllers
 
             return RedirectToAction("ShowUser", "Profile", new { id = id });
         }
+
+        public ActionResult FriendRequests()
+        {
+            var curUserId = _userProfileService.GetOneByPredicate(u => u.NickName == User.Identity.Name).Id;
+
+            var requests = _friendRequestService.GetAllByPredicate(r => (r.IsConfirmed == false && r.UserToId == curUserId));
+
+            var requestsModelList = new List<ProfileViewModel>();
+
+            foreach (var item in requests)
+                requestsModelList.Add(_userService.GetById((int)item.UserFromId).UserProfile.ToMvcProfile());
+            if (Request.IsAjaxRequest())
+                return PartialView("_RequestsList", requestsModelList);
+            return View("_RequestsList", requestsModelList);
+        }
+
+        #endregion
     }
 }

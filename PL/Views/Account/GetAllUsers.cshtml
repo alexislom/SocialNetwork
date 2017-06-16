@@ -22,7 +22,7 @@ else
         {
             <div class="row">
                 <div class="col-xs-6">
-                    @Html.ActionLink(item.UserName, "ShowUser", "Profile", new { id = item.Id })
+                    @Html.ActionLink(item.UserName,"ShowUser","Profile",new{id = item.Id},new {})
                 </div>
                 <div class="col-xs-6">
                     @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector col-xs-6" })
@@ -43,13 +43,14 @@ else
     }
 }
 <script>
-    $(document).ready(function(){  $(".user_role_selector").change(function () {
+    $(document).ready(function () {
+        $(".user_role_selector").change(function () {
         var selectedRole = $(this).val();
         var next = $(this).next(".role_value").val(selectedRole);
-    });
+        });
 
         $(".button_delete").click(function () {
             location.href = "/Account/DeleteUser/" + $(this).val();
-        })
+        });
     })
 </script>

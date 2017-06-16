@@ -23,13 +23,13 @@ namespace ORM.EF
 
             #region Users,UserProfiles and Photo
 
-            var admin = new User()
+            var admin = new User
             {
                 UserName = "admin",
                 Password = "qwerty",
                 Email = "alexislomako@gmail.com",
                 RoleId = 1,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
                     NickName = "admin",
                     Photo = new Photo(),
@@ -43,223 +43,223 @@ namespace ORM.EF
                 }
             };
 
-            var user1 = new User()
+            var user1 = new User
             {
-                UserName = "affleck",
-                Password = "passwordqwerty",
-                Email = "affleck@gmail.com",
+                UserName = "putin",
+                Password = "123456",
+                Email = "putin@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "affleck",
+                    NickName = "putin",
                     Photo = new Photo(),
-                    FirstName = "Ben",
-                    LastName = "Affleck",
-                    Status = "I'm Batman",
-                    DateOfBirth = new System.DateTime(1972, 8, 15),
-                    City = "Bercli",
+                    FirstName = "Vladimir",
+                    LastName = "Vladimirovich",
+                    Status = "The most powerful man!",
+                    DateOfBirth = new System.DateTime(1952, 10, 07),
+                    City = "Moscow",
                     Gender = true,
-                    MobilePhoneNumber = "+567437897651"
+                    MobilePhoneNumber = "+495-985-60-60"
                 }
             };
 
-            var user2 = new User()
+            var user2 = new User
             {
-                UserName = "perry",
-                Password = "simplepassword",
-                Email = "perry@gmail.com",
+                UserName = "poroshenko",
+                Password = "123456",
+                Email = "poroshenko@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "perry",
+                    NickName = "poroshenko",
                     Photo = new Photo(),
-                    FirstName = "Katy",
-                    LastName = "Perry",
-                    Status = "Like music",
-                    DateOfBirth = new System.DateTime(1984, 10, 25),
-                    City = "Santa Barbara",
+                    FirstName = "Petr",
+                    LastName = "Poroshenko",
+                    Status = "I'm just loving sweets...",
+                    DateOfBirth = new System.DateTime(1965, 09, 26),
+                    City = "Kiev",
+                    Gender = true,
+                    MobilePhoneNumber = "+380-44-255-7333"
+                }
+            };
+
+            var user3 = new User
+            {
+                UserName = "merkel",
+                Password = "123456",
+                Email = "merkel@gmail.com",
+                RoleId = 2,
+                UserProfile = new UserProfile
+                {
+                    NickName = "merkel",
+                    Photo = new Photo(),
+                    FirstName = "Angela",
+                    LastName = "Merkel",
+                    Status = "Tolerance is our all",
+                    DateOfBirth = new System.DateTime(1954, 07, 17),
+                    City = "Berlin",
                     Gender = false,
-                    MobilePhoneNumber = "+345977642433"
+                    MobilePhoneNumber = "+301778826937"
                 }
             };
 
-            var user3 = new User()
+            var user4 = new User
             {
-                UserName = "jolie",
-                Password = "simplepassword",
-                Email = "jolie@gmail.com",
+                UserName = "trump",
+                Password = "123456",
+                Email = "trump@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "jolie",
+                    NickName = "trump",
                     Photo = new Photo(),
-                    FirstName = "Angelina",
-                    LastName = "Jolie",
-                    Status = "Like travelling",
-                    DateOfBirth = new System.DateTime(1975, 6, 4),
-                    City = "Los Angeles",
-                    Gender = false,
-                    MobilePhoneNumber = "+345977642433"
-                }
-            };
-
-            var user4 = new User()
-            {
-                UserName = "maguire",
-                Password = "simplepassword",
-                Email = "maguire@gmail.com",
-                RoleId = 2,
-                UserProfile = new UserProfile()
-                {
-                    NickName = "maguire",
-                    Photo = new Photo(),
-                    FirstName = "Tobi",
-                    LastName = "Maguire",
-                    Status = "Big fan of \"Spider-man!\"",
-                    DateOfBirth = new System.DateTime(1975, 6, 27),
-                    City = "Santa Monica",
+                    FirstName = "Donald",
+                    LastName = "Trump",
+                    Status = "Make America great again!",
+                    DateOfBirth = new System.DateTime(1946, 06, 14),
+                    City = "New York",
                     Gender = true,
-                    MobilePhoneNumber = "+345876447433"
+                    MobilePhoneNumber = "+1-800-469-92-69"
                 }
             };
 
-            var user5 = new User()
+            var user5 = new User
             {
-                UserName = "jackman",
-                Password = "simplepassword",
-                Email = "jackman@gmail.com",
+                UserName = "luka",
+                Password = "123456",
+                Email = "luka@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "jackman",
+                    NickName = "luka",
                     Photo = new Photo(),
-                    FirstName = "Hugh",
-                    LastName = "Jackman",
-                    Status = "Big fan \"True Detective!\"",
-                    DateOfBirth = new System.DateTime(1968, 10, 12),
-                    City = "Sydney",
+                    FirstName = "Alexander",
+                    LastName = "Lukashenko",
+                    Status = "The crisis is in our heads!",
+                    DateOfBirth = new System.DateTime(1954, 08, 30),
+                    City = "Minsk",
                     Gender = true,
-                    MobilePhoneNumber = "+345875447432"
+                    MobilePhoneNumber = "8017-222-36-23"
                 }
             };
 
-            var user6 = new User()
+            var user6 = new User
             {
-                UserName = "craig",
-                Password = "simplepassword",
-                Email = "craig@gmail.com",
+                UserName = "obama",
+                Password = "123456",
+                Email = "obama@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "craig",
+                    NickName = "obama",
                     Photo = new Photo(),
-                    FirstName = "Daniel",
-                    LastName = "Craig",
-                    Status = "Bond, James Bond",
-                    DateOfBirth = new System.DateTime(1968, 3, 2),
-                    City = "Liverpool",
+                    FirstName = "Barak",
+                    LastName = "Obama",
+                    Status = "I'm fine",
+                    DateOfBirth = new System.DateTime(1961, 08, 4),
+                    City = "Washington",
                     Gender = true,
-                    MobilePhoneNumber = "+225876747433"
+                    MobilePhoneNumber = "+1-824-455-92-69"
                 }
             };
 
-            var user7 = new User()
+            var user7 = new User
             {
-                UserName = "gates",
-                Password = "simplepassword",
-                Email = "gates@gmail.com",
-                RoleId = 3,
-                UserProfile = new UserProfile()
-                {
-                    NickName = "gates",
-                    Photo = new Photo(),
-                    FirstName = "Bill",
-                    LastName = "Gates",
-                    Status = "Love Soft and Micro things!",
-                    DateOfBirth = new System.DateTime(1955, 10, 28),
-                    City = "Seattle",
-                    Gender = true,
-                    MobilePhoneNumber = "+225896747433"
-                }
-            };
-
-            var user8 = new User()
-            {
-                UserName = "watson",
-                Password = "simplepassword",
-                Email = "watson@gmail.com",
+                UserName = "medvedev",
+                Password = "123456",
+                Email = "medvedev@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "watson",
+                    NickName = "medvedev",
                     Photo = new Photo(),
-                    FirstName = "Emma",
-                    LastName = "Watson",
-                    Status = "+10 points to Griffindor!",
+                    FirstName = "Dmitrii",
+                    LastName = "Medvedev",
+                    Status = "There is no money, but you are holding!",
+                    DateOfBirth = new System.DateTime(1965, 09, 14),
+                    City = "Moscow",
+                    Gender = true,
+                    MobilePhoneNumber = "+495-935-40-60"
+                }
+            };
+
+            var user8 = new User
+            {
+                UserName = "arnold",
+                Password = "123456",
+                Email = "arnold@gmail.com",
+                RoleId = 2,
+                UserProfile = new UserProfile
+                {
+                    NickName = "arnold",
+                    Photo = new Photo(),
+                    FirstName = "Arnold",
+                    LastName = "Schwarzenegger",
+                    Status = "I'll be back!",
                     DateOfBirth = new System.DateTime(1990, 5, 15),
                     City = "Paris",
-                    Gender = false,
+                    Gender = true,
                     MobilePhoneNumber = "+385896747455"
                 }
             };
 
             var user9 = new User()
             {
-                UserName = "olsen",
-                Password = "simplepassword",
-                Email = "olsen@gmail.com",
-                RoleId = 2,
-                UserProfile = new UserProfile()
+                UserName = "eltcen",
+                Password = "123456",
+                Email = "eltcen@gmail.com",
+                RoleId = 4,
+                UserProfile = new UserProfile
                 {
-                    NickName = "olsen",
+                    NickName = "eltcen",
                     Photo = new Photo(),
-                    FirstName = "Elizabeth",
-                    LastName = "Olsen",
-                    Status = "Love is blind",
-                    DateOfBirth = new System.DateTime(1989, 2, 16),
-                    City = "Sherman Oaks",
-                    Gender = false,
-                    MobilePhoneNumber = "+385896700455"
+                    FirstName = "Boris",
+                    LastName = "Nikolaevich",
+                    Status = ":(",
+                    DateOfBirth = new System.DateTime(1931, 02, 01),
+                    City = "Moscow",
+                    Gender = true,
+                    MobilePhoneNumber = "+495-335-50-60"
                 }
             };
 
-            var user10 = new User()
+            var user10 = new User
             {
-                UserName = "knightley",
-                Password = "simplepassword",
-                Email = "knightley@gmail.com",
+                UserName = "tetcher",
+                Password = "123456",
+                Email = "tetcher@gmail.com",
                 RoleId = 2,
-                UserProfile = new UserProfile()
+                UserProfile = new UserProfile
                 {
-                    NickName = "knightley",
+                    NickName = "tetcher",
                     Photo = new Photo(),
-                    FirstName = "Keira",
-                    LastName = "Knightley",
-                    Status = "Like active people)",
-                    DateOfBirth = new System.DateTime(1985, 3, 26),
+                    FirstName = "Margaret",
+                    LastName = "Tetcher",
+                    Status = "The Iron Lady",
+                    DateOfBirth = new System.DateTime(1925, 10, 13),
                     City = "London",
                     Gender = false,
-                    MobilePhoneNumber = "+387296700455"
+                    MobilePhoneNumber = "+7-495-123-45-67"
                 }
             };
 
-            var user11 = new User()
+            var user11 = new User
             {
-                UserName = "pitt",
-                Password = "simplepassword",
-                Email = "pitt@gmail.com",
-                RoleId = 4,
-                UserProfile = new UserProfile()
+                UserName = "kennedy",
+                Password = "123456",
+                Email = "kennedy@gmail.com",
+                RoleId = 2,
+                UserProfile = new UserProfile
                 {
-                    NickName = "pitt",
+                    NickName = "kennedy",
                     Photo = new Photo(),
-                    FirstName = "Brad",
-                    LastName = "Pitt",
-                    Status = "Join to my Fight club",
-                    DateOfBirth = new System.DateTime(1963, 12, 18),
-                    City = "Shawnee",
+                    FirstName = "John",
+                    LastName = "Kenedy",
+                    Status = "35th US President",
+                    DateOfBirth = new System.DateTime(1963, 11, 22),
+                    City = "Bruklin",
                     Gender = true,
-                    MobilePhoneNumber = "+387796712455"
+                    MobilePhoneNumber = "+1-670-459-92-49"
                 }
             };
 
@@ -267,63 +267,63 @@ namespace ORM.EF
 
             #region Friendships
 
-            var frienship1 = new FriendRequest()
+            var frienship1 = new FriendRequest
             {
                 UserFromId = 1,
                 UserToId = 2,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship2 = new FriendRequest()
+            var frienship2 = new FriendRequest
             {
                 UserFromId = 4,
                 UserToId = 2,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship3 = new FriendRequest()
+            var frienship3 = new FriendRequest
             {
                 UserFromId = 2,
                 UserToId = 3,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship4 = new FriendRequest()
+            var frienship4 = new FriendRequest
             {
                 UserFromId = 3,
                 UserToId = 1,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship5 = new FriendRequest()
+            var frienship5 = new FriendRequest
             {
                 UserFromId = 1,
                 UserToId = 4,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship6 = new FriendRequest()
+            var frienship6 = new FriendRequest
             {
                 UserFromId = 1,
                 UserToId = 5,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship7 = new FriendRequest()
+            var frienship7 = new FriendRequest
             {
                 UserFromId = 2,
                 UserToId = 5,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship8 = new FriendRequest()
+            var frienship8 = new FriendRequest
             {
                 UserFromId = 10,
                 UserToId = 6,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship9 = new FriendRequest()
+            var frienship9 = new FriendRequest
             {
                 UserFromId = 1,
                 UserToId = 8,
@@ -331,7 +331,7 @@ namespace ORM.EF
                 IsConfirmed = true
             };
 
-            var frienship10 = new FriendRequest()
+            var frienship10 = new FriendRequest
             {
                 UserFromId = 4,
                 UserToId = 9,
@@ -339,7 +339,7 @@ namespace ORM.EF
                 IsConfirmed = true
             };
 
-            var frienship11 = new FriendRequest()
+            var frienship11 = new FriendRequest
             {
                 UserFromId = 4,
                 UserToId = 3,
@@ -347,7 +347,7 @@ namespace ORM.EF
                 IsConfirmed = true
             };
 
-            var frienship12 = new FriendRequest()
+            var frienship12 = new FriendRequest
             {
                 UserFromId = 10,
                 UserToId = 1,
@@ -355,7 +355,7 @@ namespace ORM.EF
                 IsConfirmed = false
             };
 
-            var frienship13 = new FriendRequest()
+            var frienship13 = new FriendRequest
             {
                 UserFromId = 11,
                 UserToId = 1,
@@ -363,14 +363,14 @@ namespace ORM.EF
                 IsConfirmed = false
             };
 
-            var frienship14 = new FriendRequest()
+            var frienship14 = new FriendRequest
             {
                 UserFromId = 12,
                 UserToId = 1,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = false
             };
-            var frienship15 = new FriendRequest()
+            var frienship15 = new FriendRequest
             {
                 UserFromId = 9,
                 UserToId = 1,
@@ -378,14 +378,14 @@ namespace ORM.EF
                 IsConfirmed = false
             };
 
-            var frienship16 = new FriendRequest()
+            var frienship16 = new FriendRequest
             {
                 UserFromId = 6,
                 UserToId = 7,
                 RequestDate = System.DateTime.Now,
                 IsConfirmed = true
             };
-            var frienship17 = new FriendRequest()
+            var frienship17 = new FriendRequest
             {
                 UserFromId = 10,
                 UserToId = 11,

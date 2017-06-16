@@ -78,8 +78,6 @@ namespace PL.Controllers
             if (ModelState.IsValid)
             {
                 MembershipRegistration(viewModel);
-                //if (User.IsInRole("Admin"))
-                //    return RedirectToAction("GetAllUsers");
                 FormsAuthentication.SetAuthCookie(viewModel.UserName, false);
                 return RedirectToAction("Index", "Profile");
             }
@@ -111,6 +109,16 @@ namespace PL.Controllers
         #endregion
 
         #region For admin only
+
+        [Authorize(Roles = "Admin, Moderator")]
+        public ActionResult ChangeRole(int id, string value)
+        {
+            var user = _userService.GetById(id);
+            user.RoleId = _roleService.GetOneByPredicate(r => r.Id.ToString() == value).Id;
+            _userService.Update(user);
+
+            return RedirectToAction("GetAllUsers");
+        }
 
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
@@ -146,16 +154,6 @@ namespace PL.Controllers
                 return PartialView("_MessageFilterProfilesViewList", userProfiles);
             return View("_MessageFilterProfilesViewList", userProfiles);
 
-        }
-
-        [Authorize(Roles = "Admin, Moderator")]
-        public ActionResult ChangeRole(int id, string value)
-        {
-            var user = _userService.GetById(id);
-            user.RoleId = _roleService.GetOneByPredicate(r => r.Id.ToString() == value).Id;
-            _userService.Update(user);
-
-            return RedirectToAction("GetAllUsers");
         }
 
         [Authorize(Roles = "Admin")]

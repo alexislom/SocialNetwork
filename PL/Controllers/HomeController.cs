@@ -8,6 +8,8 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
     }

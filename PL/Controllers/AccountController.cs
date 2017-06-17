@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using BLL.Interface.Interfaces;
 using PL.Models.User;
 using PL.Providers;
 using System.Web.Security;
 using PL.Infrastructure.Mappers;
+using PL.Infrastructure;
+using PagedList;
 
 namespace PL.Controllers
 {
@@ -122,37 +125,47 @@ namespace PL.Controllers
 
         [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
-        public ActionResult GetAllUsers()
+        public ActionResult GetAllUsers(int? page)
         {
             var users = _userService.GetAllByPredicate(u => u.UserName != User.Identity.Name);
             var mvcUsers = users.Select(u => u.ToMvcUser()).ToList();
             var roles = _roleService.GetAllByPredicate(r => r.Name != "Admin").Select(r => r.ToMvcRole()).ToList();
-            var model = new UsersEditModel
+
+            var model = new List<UsersEditModel>();
+            foreach (var item in mvcUsers)
             {
-                Users = mvcUsers,
-                Roles = from role in roles
-                    select new SelectListItem
-                    {
-                        Text = role.Name,
-                        Value = role.Id.ToString(),
-                    }
-            };
-            ViewBag.Title = "Users";
+                model.Add(new UsersEditModel
+                {
+                    User = item,
+                    Roles = from role in roles
+                        select new SelectListItem
+                        {
+                            Text = role.Name,
+                            Value = role.Id.ToString(),
+                        }
+                });
+            }
+
+            int pageNumber = (page ?? 1);
+
+            ViewBag.Title = "Filter user messages";
 
             if (Request.IsAjaxRequest())
-                return PartialView(model);
-            return View(model);
+                return PartialView("GetAllUsers", model.ToPagedList(pageNumber, Constants.PAGESIZE));
+            return View("GetAllUsers", model.ToPagedList(pageNumber, Constants.PAGESIZE));
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult GetUsers()
+        public ActionResult GetUsers(int? page)
         {
             var userProfiles = _userProfileService.GetAllByPredicate(p => p.NickName != User.Identity.Name)
                 .Select(p => p.ToMvcProfile()).ToList();
 
+            int pageNumber = (page ?? 1);
+
             if (Request.IsAjaxRequest())
-                return PartialView("_MessageFilterProfilesViewList", userProfiles);
-            return View("_MessageFilterProfilesViewList", userProfiles);
+                return PartialView("_MessageFilterProfilesViewList", userProfiles.ToPagedList(pageNumber, Constants.PAGESIZE));
+            return View("_MessageFilterProfilesViewList", userProfiles.ToPagedList(pageNumber, Constants.PAGESIZE));
 
         }
 

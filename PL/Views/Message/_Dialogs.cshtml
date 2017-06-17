@@ -11,7 +11,6 @@
 @foreach (var m in Model)
 {
     <div class="row">
-
         <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
             <a href="@Url.Action("ShowUser","Profile",new {id = m.InterLocutor.Id })"><img src="@Url.Action("GetImage", "Profile", new { Id = m.InterLocutor.Id})" class="img-circle img-responsive" /> </a>
         </div>

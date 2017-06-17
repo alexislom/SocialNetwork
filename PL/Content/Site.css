@@ -1,38 +1,53 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-
     background: linear-gradient(4deg, #4163cc, #acb3c8, #4f51d7);
     background-size: 600% 600%;
-
     -webkit-animation: AnimationName 53s ease infinite;
     -moz-animation: AnimationName 53s ease infinite;
     animation: AnimationName 53s ease infinite;
-
-
 }
+
 @-webkit-keyframes AnimationName {
-    0% { background-position: 51% 0% }
+    0% {
+        background-position: 51% 0%
+    }
 
-    50% { background-position: 50% 100% }
+    50% {
+        background-position: 50% 100%
+    }
 
-    100% { background-position: 51% 0% }
+    100% {
+        background-position: 51% 0%
+    }
 }
 
 @-moz-keyframes AnimationName {
-    0% { background-position: 51% 0% }
+    0% {
+        background-position: 51% 0%
+    }
 
-    50% { background-position: 50% 100% }
+    50% {
+        background-position: 50% 100%
+    }
 
-    100% { background-position: 51% 0% }
+    100% {
+        background-position: 51% 0%
+    }
 }
 
 @keyframes AnimationName {
-    0% { background-position: 51% 0% }
+    0% {
+        background-position: 51% 0%
+    }
 
-    50% { background-position: 50% 100% }
+    50% {
+        background-position: 50% 100%
+    }
 
-    100% { background-position: 51% 0% }
+    100% {
+        background-position: 51% 0%
+    }
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -67,9 +82,10 @@ textarea {
     border-radius: 15px 15px 0 0;
 }
 
-.modal-header h4 {
-    color: white;
-}
+    .modal-header h4 {
+        color: white;
+    }
+
 .close {
     transform: scale(2);
 }
@@ -77,7 +93,7 @@ textarea {
 .modal-footer {
     background: #1995dc;
     color: white;
-    border-radius: 0 0  15px 15px;
+    border-radius: 0 0 15px 15px;
 }
 
 .modal-content {
@@ -96,6 +112,7 @@ textarea {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -109,16 +126,20 @@ textarea {
     /*background: red!important;*/
     transition: 0.25s;
 }
-.text-left li a:hover {
-    background: none;
-    transform: scale(1.2) translate(10px);
-    color: black;
-}
 
-.text-left li a:focus {
-    background: none;
-    color: black;
-}
+    .text-left li a:hover {
+        background: none;
+        transform: scale(1.2) translate(10px);
+        font-size: 20px;
+        color: black;
+        background: #1995dc;
+        border-radius: 10px;
+    }
+
+    .text-left li a:focus {
+        background: none;
+        color: black;
+    }
 
 
 /* styles for validation helpers */
@@ -146,5 +167,22 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+.no-max-width {
+    max-width: none !important;
+}
 
+.img-preview {
+    transition: 0.5s;
+}
 
+.img-preview:hover {
+    z-index: 20 !important;
+    transform: scale(2, 2);
+}
+
+.img-shadow:hover {
+    transition: 0.5s;
+}
+.img-shadow:hover {
+    box-shadow: 5px 10px 15px -1px rgba(0,0,0,0.75);
+}

@@ -23,6 +23,23 @@ namespace PL.Controllers
             _userProfileService = userProfileService;
         }
 
+        public ActionResult Dialogs()
+        {
+            var userId = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name).Id;
+            var lastMessages = _messageService.GetAllChatsWith(userId).Select(m => m.ToMvcMessage()).ToList();
+            var model = new List<DialogViewModel>();
+            foreach (var item in lastMessages)
+            {
+                var interlocutorId = (int)(item.SenderId == userId ? item.ReceiverId : item.SenderId);
+                var interlocutorProfile = _userProfileService.GetById(interlocutorId).ToDialogProfile();
+                model.Add(new DialogViewModel { InterLocutor = interlocutorProfile, LastMessage = item });
+            }
+
+            if (Request.IsAjaxRequest())
+                return PartialView("_Dialogs", model);
+            return View("_Dialogs", model);
+        }
+
         [HttpGet]
         public ActionResult GetMessages(int id)
         {
@@ -42,6 +59,7 @@ namespace PL.Controllers
                 UserId = currentUser.Id,
                 InterlocutorId = companion.Id
             };
+
             if (Request.IsAjaxRequest())
                 return PartialView("_GetMessages", model);
             return View("_GetMessages", model);
@@ -68,26 +86,10 @@ namespace PL.Controllers
                 return PartialView("_Message", model);
             }
 
-
             return RedirectToAction("GetMessages", new { id = receiverId });
         }
 
-        public ActionResult Dialogs()
-        {
-            var userId = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name).Id;
-            var lastMessages = _messageService.GetAllChatsWith(userId).Select(m => m.ToMvcMessage()).ToList();
-            var model = new List<DialogViewModel>();
-            foreach (var item in lastMessages)
-            {
-                var interlocutorId = (int)(item.SenderId == userId ? item.ReceiverId : item.SenderId);
-                var interlocutorProfile = _userProfileService.GetById(interlocutorId).ToDialogProfile();
-                model.Add(new DialogViewModel() { InterLocutor = interlocutorProfile, LastMessage = item });
-            }
-
-            if (Request.IsAjaxRequest())
-                return PartialView("_Dialogs", model);
-            return View("_Dialogs", model);
-        }
+        
 
         [Authorize(Roles = "Admin")]
         public ActionResult GetUserMessages(int id)
@@ -102,6 +104,11 @@ namespace PL.Controllers
             message.TextMessage = "Message's text blocked by " + User.Identity.Name;
             _messageService.Update(message);
             return RedirectToAction("GetUserMessages", new { id = message.FromUserId });
+        }
+
+        public ActionResult TestChat()
+        {
+            return View();
         }
     }
 }

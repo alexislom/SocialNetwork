@@ -225,6 +225,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Infrastructure\Constants.cs" />
     <Compile Include="Infrastructure\CustomHelpers\AjaxHelperExtention.cs" />
     <Compile Include="Infrastructure\CustomAttributes\CustomAuthorizeAttribute.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Infrastructure\Mappers\RoleMapper.cs" />
     <Compile Include="Infrastructure\Mappers\UserMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Models\Message\ChatUserModel.cs" />
     <Compile Include="Models\Message\MessageModel.cs" />
     <Compile Include="Models\Message\MessagesViewModel.cs" />
     <Compile Include="Models\Profile\DialogProfile.cs" />
@@ -288,6 +290,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\customJS.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -306,6 +309,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\util.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -335,6 +339,7 @@
     <Content Include="Views\Message\_Message.cshtml" />
     <Content Include="Views\Message\_Dialogs.cshtml" />
     <Content Include="Views\Message\GetUserMessages.cshtml" />
+    <Content Include="Views\Message\TestChat.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

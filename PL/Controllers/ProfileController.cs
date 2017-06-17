@@ -60,12 +60,11 @@ namespace PL.Controllers
                     Gender = model.Gender
                 }).Select(x => x.ToMvcProfile()).ToList();
 
-                int pageSize = 4;
                 int pageNumber = (page ?? 1);
 
                 ViewBag.Title = "Search Results";
                 ViewBag.EmptyMessage = "No results...";
-                return View("_ProfilesViewList", result.ToPagedList(pageNumber, pageSize));
+                return View("_ProfilesViewList", result.ToPagedList(pageNumber, Constants.PAGESIZE));
             }
             return View(model);
         }
@@ -98,7 +97,10 @@ namespace PL.Controllers
             ImageSetUp(model.Id, file);
             _userProfileService.Update(model.ToUpdatingBllProfile());
             FullProfileViewModel updatedModel = _userProfileService.GetById(model.Id).ToFullMvcProfile();
-            return PartialView("_Profile", updatedModel);
+            
+            if(Request.IsAjaxRequest())
+                return PartialView("_Profile", updatedModel);
+            return View("_Profile", updatedModel);
         }
 
         #endregion

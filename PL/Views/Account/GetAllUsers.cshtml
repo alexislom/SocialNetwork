@@ -1,4 +1,6 @@
-﻿@model PL.Models.User.UsersEditModel
+﻿@model PagedList.IPagedList<PL.Models.User.UsersEditModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Get))
 {   <div class="row">
@@ -10,24 +12,24 @@
     <hr />
 }
 
-@if (Model.Users.Count() == 0)
+@if (Model.Count() == 0)
 {
     <b>Social Network is dead... There are nobody except you</b>
 }
 else
 {
-    foreach (var item in Model.Users)
+    foreach (var item in Model)
     {
         using (Html.BeginForm("ChangeRole", "Account"))
         {
             <div class="row">
                 <div class="col-xs-6">
-                    @Html.ActionLink(item.UserName,"ShowUser","Profile",new{id = item.Id}, new {})
+                    @Html.ActionLink(item.User.UserName,"ShowUser","Profile",new{ id = item.User.Id}, new {})
                 </div>
                 <div class="col-xs-6">
-                    @Html.DropDownListFor(x => Model.NewRole, Model.Roles, new { @class = "form-control user_role_selector col-xs-6" })
-                    @Html.Hidden("value", Model.NewRole, new { @class = "role_value", @value = "ActiveUser" })
-                    @Html.Hidden("id", item.Id, new { @class = "id" })
+                    @Html.DropDownListFor(x => item.NewRole, item.Roles, new { @class = "form-control user_role_selector no-max-width" })
+                    @Html.Hidden("value", item.NewRole, new { @class = "role_value", @value = "ActiveUser" })
+                    @Html.Hidden("id", item.User.Id, new { @class = "id" })
                 </div>
             </div>
             <div class="row">
@@ -35,13 +37,17 @@ else
                     <button type="submit" class="btn btn-success btn-block">Save</button>
                 </div>
                 <div class="col-xs-6">
-                    <button type="button" value="@item.Id" class="btn btn-block btn-danger button_delete">Delete</button>
+                    <button type="button" value="@item.User.Id" class="btn btn-block btn-danger button_delete">Delete</button>
                 </div>
             </div>
             <hr />
         }
     }
 }
+<h3>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</h3>
+
+@Html.PagedListPager(Model, page => Url.Action("GetAllUsers", "Account", new { page }))
+
 <script>
     $(document).ready(function () {
         $(".user_role_selector").change(function () {

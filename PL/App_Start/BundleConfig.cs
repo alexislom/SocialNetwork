@@ -29,7 +29,7 @@ namespace PL
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
-                "~/Scripts/jquery.signalR-{version}.js"));
+                                "~/Scripts/jquery.signalR-{version}.js"));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<PL.Models.Profile.DialogViewModel>
+﻿@model PagedList.IPagedList<PL.Models.Profile.DialogViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 <div class="row">
     <h2>Dialogs</h2>
@@ -32,4 +34,6 @@
 
     </div>
 }
+<h3>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</h3>
 
+@Html.PagedListPager(Model, page => Url.Action("Dialogs", "Message", new { page }))

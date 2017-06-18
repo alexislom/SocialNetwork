@@ -1,6 +1,7 @@
 ﻿using BLL.Interface.Entities;
 using BLL.Interface.Interfaces;
 using System;
+using System.Web.Helpers;
 using System.Web.Security;
 
 namespace PL.Providers
@@ -25,7 +26,7 @@ namespace PL.Providers
             {
                 UserName = name,
                 Email = email,
-                Password = password,//Crypto.HashPassword(password),
+                Password = password,//Crypto.HashPassword(password), //password,
                 RoleId = RoleService.GetOneByPredicate(r => r.Name == "ActiveUser").Id,
                 UserProfile = profile
             };
@@ -38,7 +39,7 @@ namespace PL.Providers
         {
             var user = UserService.GetOneByPredicate(u => u.UserName == name);
 
-            return user != null && user.Password == password; //Crypto.VerifyHashedPassword(user.Password, password)
+            return !ReferenceEquals(user, null) && user.Password == password;//Crypto.VerifyHashedPassword(user.Password, password); //user.Password == password; 
         }
 
         public override MembershipUser GetUser(string name, bool userIsOnline)

@@ -1,13 +1,80 @@
 ﻿@model PL.Models.Message.MessagesViewModel
 @{
-    ViewBag.Title = "Messages";
+    ViewBag.Title = "SendMessage";
 }
 <style>
-    
-    textarea{
-        resize:none;
+    .scrollbar {
+        max-height: 330px !important;
     }
 </style>
+<br />
+<div class="container">
+    <div class="scrollbar" id="scrollbar">
+        @foreach (var m in Model.Messages)
+        {
+            if (m.SenderId == Model.FromUser.Id)
+            {
+                <div class="message right">
+                    <img src="@Url.Action("GetImage", "Profile", new {id = m.SenderId})" />
+                    <div class="bubble">
+                        @m.Text
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="message">
+                    <img src="@Url.Action("GetImage", "Profile", new {id = m.ReceiverId})" />
+                    <div class="bubble">
+                        @m.Text
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <hr />
+    @using (Ajax.BeginForm("SendMessage", null, new AjaxOptions
+                                                    { UpdateTargetId = "scrollbar",
+                                                      InsertionMode = InsertionMode.InsertAfter },
+                                                      new { @class = "chat-form", @id = "messageForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("senderId", Model.FromUser.Id)
+        @Html.Hidden("receiverId", Model.ToUser.Id)
+        @Html.TextArea("messageText", new { @id = "messageArea", @placeholder = "Write a message...", @onclick= "ScrollBottom()" })
+    }
+</div>
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#messageArea").keypress(function(e) {
+                if (e.which == 13 && !e.shiftKey) {
+                    if ($.trim($("#messageArea").val())) {
+                        $(this).closest("form").submit();
+                        $("#messageArea").val("");
+                    }
+                    $('#scrollbar').animate({ scrollTop: document.getElementById("scrollbar").scrollHeight }, 'slow');
+                    return false;
+
+                }
+            });
+            $('#scrollbar').animate({ scrollTop: document.getElementById("scrollbar").scrollHeight }, 'slow');
+            //$("div.scrollbar").scrollTop($('div.message:last').offset().top);
+        });
+
+        //function ScrollBottom() {
+        //    $('#scrollbar').animate({ scrollTop: $('#scrollbar').height() }, 'slow');
+        //}
+    </script>
+}
+
+
+@*@model PL.Models.Message.MessagesViewModel
+@{
+    ViewBag.Title = "Messages";
+}
 
 <script src="~/Scripts/customJS.js"></script>
 @foreach (var m in Model.Messages)
@@ -67,3 +134,8 @@
     }
 </div>
 
+<style>
+    textarea {
+        resize: none;
+    }
+</style>*@

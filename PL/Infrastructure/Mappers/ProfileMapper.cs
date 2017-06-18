@@ -1,5 +1,6 @@
 ﻿using BLL.Interface.Entities;
 using PL.Models.Profile;
+using PL.Models.User;
 
 namespace PL.Infrastructure.Mappers
 {
@@ -51,6 +52,7 @@ namespace PL.Infrastructure.Mappers
                 LastName = profile.LastName
             };
         }
+
         public static FullProfileViewModel ToFullMvcProfile(this BllUserProfile profile)
         {
             if (profile == null)

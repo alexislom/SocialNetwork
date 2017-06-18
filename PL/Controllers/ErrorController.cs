@@ -1,24 +1,20 @@
-﻿using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using CustomLogger;
 
 namespace PL.Controllers
 {
     public class ErrorController : Controller
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _logger = CustLogger.GetCurrentClassLogger;
 
         public ViewResult Index()
         {
-            logger.Info("Forbidden action");
+            _logger.Info("Forbidden action");
             return View("Error");
         }
         public ViewResult NotFound()
         {
-            logger.Info("Page not found");
+            _logger.Info("Page not found");
             Response.StatusCode = 404;
             return View("NotFound");
         }

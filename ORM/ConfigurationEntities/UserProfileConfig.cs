@@ -34,8 +34,6 @@ namespace ORM.ConfigurationEntities
 
             Property(p => p.CompanyOfWork)
                 .HasMaxLength(30);
-
-            Ignore(p => p.Age);
         }
     }
 }

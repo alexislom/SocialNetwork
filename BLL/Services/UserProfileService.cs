@@ -85,16 +85,6 @@ namespace BLL.Services
             SearchByStringParameter(profile.City, ref resultSet, p => p.City.Contains(profile.City));
             var result = resultSet.Where(p => p.Gender == profile.Gender).Select(p => p).ToList();
             return result;
-
-            //var result = _userProfileRepository.GetAll();
-            //if (!string.IsNullOrEmpty(profile.FirstName))
-            //    result = result.Where(c => (c.FirstName.ToLower()).Contains(profile.FirstName.ToLower()));
-            //if (!string.IsNullOrEmpty(profile.LastName))
-            //    result = result.Where(c => (c.LastName.ToLower()).Contains(profile.LastName.ToLower()));
-            //if (!string.IsNullOrEmpty(profile.City))
-            //    result = result.Where(c => (c.City.ToLower()).Contains(profile.City.ToLower()));
-
-            //return result.Select(x => x.ToBllUserProfile());
         }
 
         private void SearchByStringParameter(string parameter, ref HashSet<BllUserProfile> collection, Expression<Func<DalUserProfile, bool>> predicates)

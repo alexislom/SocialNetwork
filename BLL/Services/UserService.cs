@@ -44,7 +44,7 @@ namespace BLL.Services
 
         #endregion
 
-        #region Get profiles
+        #region Get users
 
         public BllUser GetById(int id)
         {

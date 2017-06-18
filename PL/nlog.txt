@@ -1,0 +1,1 @@
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.

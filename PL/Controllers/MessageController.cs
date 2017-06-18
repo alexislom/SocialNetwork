@@ -144,10 +144,5 @@ namespace PL.Controllers
             _messageService.Update(message);
             return RedirectToAction("GetUserMessages", new { id = message.FromUserId });
         }
-
-        public ActionResult TestChat()
-        {
-            return View();
-        }
     }
 }

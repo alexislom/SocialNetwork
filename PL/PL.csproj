@@ -70,9 +70,6 @@
     <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.10\lib\net45\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -339,7 +336,6 @@
     <Content Include="Views\Message\_Message.cshtml" />
     <Content Include="Views\Message\_Dialogs.cshtml" />
     <Content Include="Views\Message\GetUserMessages.cshtml" />
-    <Content Include="Views\Message\TestChat.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -353,6 +349,10 @@
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{41c715d4-fef0-45a2-adec-91bcf12325c9}</Project>
       <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomLogger\CustomLogger.csproj">
+      <Project>{d7cb7f97-4884-44ac-a828-d6021960f41b}</Project>
+      <Name>CustomLogger</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL.Interface\DAL.Interfaces.csproj">
       <Project>{acf5a2e3-68c4-4b0d-b568-0cbbb97250af}</Project>

@@ -1,14 +1,14 @@
 ﻿using DAL.Interfaces.Interfaces;
-using NLog;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using CustomLogger;
 
 namespace DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly ILogger _logger = CustLogger.GetCurrentClassLogger;
         private bool _isDisposed = false;
         public DbContext Context { get; private set; }
 
@@ -29,12 +29,11 @@ namespace DAL
             {
                 foreach (var eve in e.EntityValidationErrors)
                 {
-                    logger.Error("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    _logger.Error($"Entity of type \"{eve.Entry.Entity.GetType().Name}\"" + Environment.NewLine +
+                        $"in state \"{eve.Entry.State}\" has the following validation errors:");
                     foreach (var ve in eve.ValidationErrors)
                     {
-                        logger.Error("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
+                        _logger.Error($"- Property: \"{ve.PropertyName}\", Error: \"{ve.ErrorMessage}\"");
                     }
                 }
                 throw;
@@ -49,7 +48,7 @@ namespace DAL
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool isDisposing)
+        protected virtual void Dispose(bool isDisposing)
         {
             if (!_isDisposed)
             {

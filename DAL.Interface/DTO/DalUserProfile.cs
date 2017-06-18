@@ -20,6 +20,5 @@ namespace DAL.Interfaces.DTO
         public string MobilePhoneNumber { get; set; }
 
         public string Status { get; set; }
-
     }
 }

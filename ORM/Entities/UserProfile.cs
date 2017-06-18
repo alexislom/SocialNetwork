@@ -18,25 +18,6 @@ namespace ORM.Entities
         public int? HouseNumber { get; set; }
         public string CompanyOfWork { get; set; }
         public string Status { get; set; }
-        public int? Age
-        {
-            get
-            {
-                if (DateOfBirth == null)
-                    return null;
-
-                int age = DateTime.Now.Year - DateOfBirth.Value.Year;
-
-                if (DateTime.Now.Month < DateOfBirth.Value.Month || 
-                    (DateTime.Now.Month == DateOfBirth.Value.Month && DateTime.Now.Day < DateOfBirth.Value.Day))
-                {
-                    age--;
-                }
-
-                return age;
-            }
-            set { }
-        }
         [ForeignKey("Photo")]
         public int? PhotoId { get; set; }
 

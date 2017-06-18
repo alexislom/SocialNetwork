@@ -20,8 +20,7 @@ namespace DAL.Interface
         protected override Expression VisitMember(MemberExpression node)
         {
             if (node.Member.DeclaringType == typeof(TSource))
-                return Expression.MakeMemberAccess(Visit(node.Expression),
-                   typeof(TDestination).GetMember(node.Member.Name).FirstOrDefault());
+                return Expression.MakeMemberAccess(Visit(node.Expression), typeof(TDestination).GetMember(node.Member.Name).FirstOrDefault());
             return base.VisitMember(node);
         }
     }

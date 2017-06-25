@@ -4,7 +4,7 @@ using Owin;
 [assembly: OwinStartupAttribute(typeof(PL.Startup))]
 namespace PL
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {

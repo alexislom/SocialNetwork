@@ -1,1 +1,47 @@
 RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.Index => CustLogger.Info Forbidden action
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+<no type>.lambda_method => ErrorController.NotFound => CustLogger.Info Page not found
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.
+RuntimeMethodHandle.InvokeMethod => MvcApplication.Application_Start => CustLogger.Info The application started.

@@ -14,13 +14,13 @@
     });
 
     $("button#newMessage").click(function () {
-        location.href = window.location.origin + "/Message/GetMessages/" + $(this).val();
+        location.href = window.location.origin + "/Message/SendMessage/" + $(this).val();
     });
 
-    $("#messageSubmit").bind('click',function(){   
-        setTimeout("$('textarea').val('')",100);
-        $("#text").focus();
-    });
+    //$("#messageSubmit").bind('click',function(){   
+    //    setTimeout("$('textarea').val('')",100);
+    //    $("#text").focus();
+    //});
 
     $(".block_message").click(function () {
         location.href = window.location.origin + "/Message/BlockMessage/" + $(this).val();

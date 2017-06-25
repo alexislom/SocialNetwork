@@ -52,22 +52,17 @@ namespace PL.Controllers
         #endregion
 
         [HttpGet]
-        public ActionResult GetMessages(int id)
+        public ActionResult SendMessage(int id)
         {
-            //var companion = _userProfileService.GetById(id);
-            //var currentUser = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
-
             var companion = _userService.GetById(id);
-
             var currentUser = _userService.GetOneByPredicate(p => p.UserName == User.Identity.Name);
 
             var messages = _messageService.GetAllByPredicate(m =>
                     (m.FromUserId == currentUser.Id && m.ToUserId == companion.Id) ||
-                    (m.FromUserId == companion.Id && m.ToUserId == currentUser.Id)).
-                OrderByDescending(d => d.Date).OrderBy(d => d.Date).
-                Select(m => m.ToMvcMessage()).ToList();
+                    (m.FromUserId == companion.Id && m.ToUserId == currentUser.Id))
+                    .OrderBy(d => d.Date).Select(m => m.ToMvcMessage()).ToList();
 
-            var model = new MessagesViewModel()
+            var model = new MessagesViewModel
             {
                 Messages = messages,
                 FromUser = currentUser.ToMvcUser(),
@@ -75,8 +70,8 @@ namespace PL.Controllers
             };
 
             if (Request.IsAjaxRequest())
-                return PartialView("_GetMessages", model);
-            return View("_GetMessages", model);
+                return PartialView("SendMessage", model);
+            return View("SendMessage", model);
         }
 
         #region Sending message
@@ -87,7 +82,7 @@ namespace PL.Controllers
             var fromUser = _userProfileService.GetById(senderId);
             var toUser = _userProfileService.GetById(receiverId);
 
-            var message = new BllMessage()
+            var message = new BllMessage
             {
                 FromUserId = senderId,
                 ToUserId = receiverId,
@@ -100,33 +95,15 @@ namespace PL.Controllers
             _messageService.Create(message);
 
             var conversationHub = GlobalHost.ConnectionManager.GetHubContext<ConversationHub>();
-            conversationHub.Clients.Group(toUser.NickName).sendMessage(fromUser.FirstName, fromUser.PhotoId, message.Date, message.TextMessage);
+            conversationHub.Clients.Group(toUser.NickName).sendMessage(fromUser.NickName, fromUser.PhotoId, message.Date, message.TextMessage);
 
             if (Request.IsAjaxRequest())
             {
                 var model = message.ToMvcMessage();
                 return PartialView("_Message", model);
             }
-            return RedirectToAction("GetMessages", new { id = receiverId });
-            //return RedirectToAction("GetMessages", new { id = receiverId });
+            return RedirectToAction("SendMessage", new { id = receiverId });
         }
-
-        //[HttpGet]
-        //public ActionResult SendMessage(int id = -1)
-        //{
-        //    var toUser = _userProfileService.GetById(id);
-
-        //    var fromUser = _userProfileService.GetOneByPredicate(p => p.NickName == User.Identity.Name);
-
-        //    var messagesViewModel = new MessagesViewModel
-        //    {
-        //        //Messages = _messageService.GetAllChatsWith(toUser.Id)
-        //        //FromUser = fromUser.ToUserViewModel(),
-        //        //ToUser = toUser.ToUserViewModel()
-        //    };
-
-        //    return View(messagesViewModel);
-        //}
 
         #endregion
 

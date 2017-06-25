@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PL.Models.Profile;
 using PL.Models.User;
 
 namespace PL.Models.Message

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace PL.Hubs
 {
@@ -8,14 +9,16 @@ namespace PL.Hubs
     {
         public override Task OnConnected()
         {
-            Groups.Add(Context.ConnectionId, Context.User.Identity.Name);
+            var name = Context.User.Identity.Name;
+            Groups.Add(Context.ConnectionId, name);
 
             return base.OnConnected();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            Groups.Remove(Context.ConnectionId, Context.User.Identity.Name);
+            var name = Context.User.Identity.Name;
+            Groups.Remove(Context.ConnectionId, name);
 
             return base.OnDisconnected(stopCalled);
         }

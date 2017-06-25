@@ -1,9 +1,5 @@
 ﻿using BLL.Interface.Entities;
 using PL.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace PL.Infrastructure.Mappers
 {
@@ -14,7 +10,7 @@ namespace PL.Infrastructure.Mappers
             if (bllUser == null)
                 return null;
 
-            return new UserViewModel()
+            return new UserViewModel
             {
                 Id = bllUser.Id,
                 Email = bllUser.Email,
